@@ -1,0 +1,9 @@
+C:\Users\maximilianog\Documents\Ejemplos\GNB_Test\GnbWebServices\GnbApiRestful\Data\bin\Debug\netstandard2.0\Data.deps.json
+C:\Users\maximilianog\Documents\Ejemplos\GNB_Test\GnbWebServices\GnbApiRestful\Data\bin\Debug\netstandard2.0\Data.dll
+C:\Users\maximilianog\Documents\Ejemplos\GNB_Test\GnbWebServices\GnbApiRestful\Data\bin\Debug\netstandard2.0\Data.pdb
+C:\Users\maximilianog\Documents\Ejemplos\GNB_Test\GnbWebServices\GnbApiRestful\Data\obj\Debug\netstandard2.0\Data.csprojAssemblyReference.cache
+C:\Users\maximilianog\Documents\Ejemplos\GNB_Test\GnbWebServices\GnbApiRestful\Data\obj\Debug\netstandard2.0\Data.csproj.CoreCompileInputs.cache
+C:\Users\maximilianog\Documents\Ejemplos\GNB_Test\GnbWebServices\GnbApiRestful\Data\obj\Debug\netstandard2.0\Data.AssemblyInfoInputs.cache
+C:\Users\maximilianog\Documents\Ejemplos\GNB_Test\GnbWebServices\GnbApiRestful\Data\obj\Debug\netstandard2.0\Data.AssemblyInfo.cs
+C:\Users\maximilianog\Documents\Ejemplos\GNB_Test\GnbWebServices\GnbApiRestful\Data\obj\Debug\netstandard2.0\Data.dll
+C:\Users\maximilianog\Documents\Ejemplos\GNB_Test\GnbWebServices\GnbApiRestful\Data\obj\Debug\netstandard2.0\Data.pdb
