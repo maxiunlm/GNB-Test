@@ -5,6 +5,9 @@
 
 Es una aplicación Web (Frontend) desarrollada con React.Js (corriendo sobre Node.js), que consume el Servicio (WebApi) de este examen.
 
+## Abrir en el Navegador Web
+http://localhost:3000/
+
 ### Creación del proyecto
 ```bash
 npx create-react-app gnbwebclient
@@ -15,9 +18,6 @@ yarn start
 ```bash
 npm start
 ```
-
-## Abrir en el Navegador Web
-http://localhost:3000/
 
 ----------------------------------------------------------------------------------------------------------
 
