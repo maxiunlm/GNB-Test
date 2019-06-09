@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Sku from './Components/Sku';
+import GnbApp from './Components/GnbApp';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
           GNB - SKU
         </p>
       </header>
-      <Sku />
+      <GnbApp />
     </div>
   );
 }
