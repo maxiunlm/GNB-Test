@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service;
 using Webapi.Model;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Cors;
 using AutoMapper;
 
 namespace Webapi.Controllers
@@ -35,6 +36,7 @@ namespace Webapi.Controllers
 
         // GET api/Sku
         [HttpGet]
+        [EnableCors("MyPolicy")]
         public ActionResult<List<string>> Get()
         {
             try
@@ -52,6 +54,7 @@ namespace Webapi.Controllers
 
         // GET api/Sku/summary/C8514
         [HttpGet("summary/{sku}")]
+        [EnableCors("MyPolicy")]
         public async Task<ActionResult<Sku>> Get(string sku)
         {
             try

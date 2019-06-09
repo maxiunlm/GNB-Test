@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service;
 using Webapi.Model;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Cors;
 using AutoMapper;
 
 namespace Webapi.Controllers
@@ -33,6 +34,7 @@ namespace Webapi.Controllers
 
         // GET api/Rates
         [HttpGet]
+        [EnableCors("MyPolicy")]
         public async Task<ActionResult<List<CurrencyConvertion>>> Get()
         {
             try
