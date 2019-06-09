@@ -1,0 +1,6 @@
+
+*.dll
+*.pdb
+GnbWebServices/GnbApiRestful/Webapi/bin/Debug/netcoreapp2.2/Webapi.deps.json
+GnbWebServices/GnbApiRestful/Webapi/obj/project.assets.json
+GnbWebServices/GnbApiRestful/Webapi/obj/Webapi.csproj.nuget.cache

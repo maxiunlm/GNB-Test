@@ -1,0 +1,34 @@
+p {
+    margin: 1vh;
+}
+
+div.container {
+    padding: 1vh;
+}
+
+div.skuSelect {
+    width: 30vh;
+}
+
+button.skuMenuButton {
+    min-width: 35vh;
+}
+
+div.skuTransactions {
+    margin: 1vh;
+    width: 40vh;
+}
+
+div.skuTransactionItems {
+    overflow-y: auto;
+    max-height: 45vh;
+}
+
+tbody.scroll {
+    overflow-y: auto;
+    max-height: 55vh;
+}
+
+.hidden {
+    display: none
+}
