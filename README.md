@@ -5,10 +5,10 @@
 
 Es una aplicación Web (Frontend) desarrollada con React.Js (corriendo sobre Node.js), que consume el Servicio (WebApi) de este examen.
 
-## Abrir en el Navegador Web
+### Abrir en el Navegador Web
 http://localhost:3000/
 
-### Creación del proyecto
+#### Creación del proyecto
 ```bash
 npx create-react-app gnbwebclient
 cd gnbwebclient
@@ -18,6 +18,11 @@ yarn start
 ```bash
 npm start
 ```
+
+### Agregar packages
+
+ * yarn add react-select
+ * yarn add bootstrap
 
 ----------------------------------------------------------------------------------------------------------
 
@@ -32,7 +37,7 @@ dotnet run --project ./GnbApiRestful/Webapi/Webapi.csproj
 ### Abrir en el Navegador Web
   * Rates: http://localhost:5000/api/Rate
   * Transactions: http://localhost:5000/api/Transaction
-  * SKU: http://localhost:5000/api/Sku/summary/<skuId>
+  * SKU: http://localhost:5000/api/Sku/summary/skuId
   * Sku List: http://localhost:5000/api/Sku
 
 ### Instalar MongoDB con Docker
@@ -93,6 +98,7 @@ dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package Nlog.Web.AspNetcore
 dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package unity
 dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package Unity.Interception.NetCore
 dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package automapper
+dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package Microsoft.AspNetCore.Cors
 dotnet add ./GnbApiRestful/Tests/Tests.csproj package mvc
 dotnet add ./GnbApiRestful/Tests/Tests.csproj package moq
 dotnet add ./GnbApiRestful/Tests/Tests.csproj package jwt
