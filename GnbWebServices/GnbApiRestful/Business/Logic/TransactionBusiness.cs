@@ -13,16 +13,10 @@ namespace Business
         private readonly ITransactionData data;
         private readonly IMapper mapper;
 
-        public TransactionBusiness(ITransactionData data)
+        public TransactionBusiness(ITransactionData data, IMapper mapper)
         {
             this.data = data;
-
-            MapperConfiguration automappingConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Data.Model.Transaction, Transaction>();
-                config.CreateMap<Transaction, Data.Model.Transaction>();
-            });
-            this.mapper = automappingConfiguration.CreateMapper();
+            this.mapper = mapper;
         }
 
         public async Task<List<Transaction>> ListTransactions()

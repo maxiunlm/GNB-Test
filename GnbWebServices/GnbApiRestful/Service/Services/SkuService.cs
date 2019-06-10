@@ -13,18 +13,10 @@ namespace Service
         private readonly ISkuBusiness business;
         private readonly IMapper mapper;
 
-        public SkuService(ISkuBusiness business)
+        public SkuService(ISkuBusiness business, IMapper mapper)
         {
             this.business = business;
-
-            MapperConfiguration automappingConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Business.Model.Transaction, Transaction>();
-                config.CreateMap<Transaction, Business.Model.Transaction>();
-                config.CreateMap<Business.Model.Sku, Sku>();
-                config.CreateMap<Sku, Business.Model.Sku>();
-            });
-            this.mapper = automappingConfiguration.CreateMapper();
+            this.mapper = mapper;
         }
 
         public async Task<Sku> GetTransactionsBySku(string sku)

@@ -14,16 +14,10 @@ namespace Service
         private readonly IMapper mapper;
 
 
-        public RateService(IRateBusiness business)
+        public RateService(IRateBusiness business, IMapper mapper)
         {
             this.business = business;
-
-            MapperConfiguration automappingConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Business.Model.CurrencyConvertion, CurrencyConvertion>();
-                config.CreateMap<CurrencyConvertion, Business.Model.CurrencyConvertion>();
-            });
-            this.mapper = automappingConfiguration.CreateMapper();
+            this.mapper = mapper;
         }
 
         public async Task<List<CurrencyConvertion>> ListRates()

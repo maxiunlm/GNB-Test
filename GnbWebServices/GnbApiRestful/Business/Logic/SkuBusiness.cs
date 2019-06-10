@@ -17,20 +17,12 @@ namespace Business
         private readonly IRateBusiness rateBusiness;
         private readonly IMapper mapper;
 
-        public SkuBusiness(IRateBusiness rateBusiness, ISkuData data, IConfiguration configuration)
+        public SkuBusiness(IRateBusiness rateBusiness, ISkuData data, IConfiguration configuration, IMapper mapper)
         {
             this.data = data;
             this.rateBusiness = rateBusiness;
             defualtCurrency = configuration["DefualtCurrency"];
-
-            MapperConfiguration automappingConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Data.Model.CurrencyConvertion, CurrencyConvertion>();
-                config.CreateMap<CurrencyConvertion, Data.Model.CurrencyConvertion>();
-                config.CreateMap<Data.Model.Transaction, Transaction>();
-                config.CreateMap<Transaction, Data.Model.Transaction>();
-            });
-            this.mapper = automappingConfiguration.CreateMapper();
+            this.mapper = mapper;
         }
 
         public List<string> ListSkus()

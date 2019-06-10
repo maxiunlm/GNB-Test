@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Service;
 using Webapi.Model;
 using Webapi.Filters;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
 using AutoMapper;
 
@@ -16,24 +15,13 @@ namespace Webapi.Controllers
     [ApiController]
     public class SkuController : ControllerBase
     {
-        // private readonly ILogger logger;
         private readonly ISkuService service;
         private readonly IMapper mapper;
 
-        public SkuController(ISkuService service, IMapper mapper) //ILogger<SkuController> logger)
+        public SkuController(ISkuService service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
-            // this.logger = logger;
-
-            // MapperConfiguration automappingConfiguration = new MapperConfiguration(); // config =>
-            // // {
-            // //     config.CreateMap<Service.Model.Transaction, Transaction>();
-            // //     config.CreateMap<Transaction, Service.Model.Transaction>();
-            // //     config.CreateMap<Service.Model.Sku, Sku>();
-            // //     config.CreateMap<Sku, Service.Model.Sku>();
-            // // });
-            // this.mapper = automappingConfiguration.CreateMapper();
         }
 
         // GET api/Sku

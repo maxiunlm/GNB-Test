@@ -13,16 +13,10 @@ namespace Business
         private readonly IRateData data;
         private readonly IMapper mapper;
 
-        public RateBusiness(IRateData data)
+        public RateBusiness(IRateData data, IMapper mapper)
         {
             this.data = data;
-
-            MapperConfiguration automappingConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Data.Model.CurrencyConvertion, CurrencyConvertion>();
-                config.CreateMap<CurrencyConvertion, Data.Model.CurrencyConvertion>();
-            });
-            this.mapper = automappingConfiguration.CreateMapper();
+            this.mapper = mapper;
         }
 
         public async Task<List<CurrencyConvertion>> ListRates()
