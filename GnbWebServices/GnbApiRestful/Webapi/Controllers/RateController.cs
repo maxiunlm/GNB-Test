@@ -16,21 +16,22 @@ namespace Webapi.Controllers
     [ApiController]
     public class RateController : ControllerBase
     {
-        private readonly ILogger logger;
+        // private readonly ILogger logger;
         private readonly IRateService service;
         private readonly IMapper mapper;
 
-        public RateController(IRateService service, ILogger<RateController> logger)
+        public RateController(IRateService service, IMapper mapper) // , ILogger<RateController> logger)
         {
             this.service = service;
-            this.logger = logger;
+            this.mapper = mapper;
+            // this.logger = logger;
 
-            MapperConfiguration automappingConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Service.Model.CurrencyConvertion, CurrencyConvertion>();
-                config.CreateMap<CurrencyConvertion, Service.Model.CurrencyConvertion>();
-            });
-            this.mapper = automappingConfiguration.CreateMapper();
+            // MapperConfiguration automappingConfiguration = new MapperConfiguration(); //config =>
+            // // {
+            // //     config.CreateMap<Service.Model.CurrencyConvertion, CurrencyConvertion>();
+            // //     config.CreateMap<CurrencyConvertion, Service.Model.CurrencyConvertion>();
+            // // });
+            // this.mapper = automappingConfiguration.CreateMapper();
         }
 
         // GET api/Rates

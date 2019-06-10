@@ -16,21 +16,22 @@ namespace Webapi.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
-        private readonly ILogger logger;
+        // private readonly ILogger logger;
         private readonly ITransactionService service;
         private readonly IMapper mapper;
 
-        public TransactionController(ITransactionService service, ILogger<TransactionController> logger)
+        public TransactionController(ITransactionService service, IMapper mapper) //ILogger<SkuController> logger)
         {
             this.service = service;
-            this.logger = logger;
+            this.mapper = mapper;
+            // this.logger = logger;
 
-            MapperConfiguration automappingConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Service.Model.Transaction, Transaction>();
-                config.CreateMap<Transaction, Service.Model.Transaction>();
-            });
-            this.mapper = automappingConfiguration.CreateMapper();
+            // MapperConfiguration automappingConfiguration = new MapperConfiguration(config =>
+            // {
+            //     config.CreateMap<Service.Model.Transaction, Transaction>();
+            //     config.CreateMap<Transaction, Service.Model.Transaction>();
+            // });
+            // this.mapper = automappingConfiguration.CreateMapper();
         }
 
         // GET api/Transactions

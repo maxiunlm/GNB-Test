@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Webapi.Controllers;
+using Webapi.Profiles;
 using Webapi.Filters;
 using Service;
 using Business;
@@ -18,6 +19,7 @@ using Data;
 using System.IO;
 using NLog;
 using NLog.Extensions.Logging;
+using AutoMapper;
 
 namespace Webapi
 {
@@ -38,24 +40,44 @@ namespace Webapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add Cors
-            services.AddCors(o => o.AddPolicy(myPolicy, builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-
+            ConfigureCors(services);
             services.AddHttpClient();
+            ConfigureFilters(services);
+            ConfigureMapping(services);
+            ConfigureIoCApp(services);
+        }
+
+        private void ConfigureMapping(IServiceCollection services)
+        {
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+        }
+
+        private void ConfigureFilters(IServiceCollection services)
+        {
+            // Auditoria - Filters - Console Output
             services.AddMvc(o =>
             {
                 o.Filters.Add(typeof(WebExceptionFilter));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
             services.AddScoped<WebExceptionFilter>();
             services.AddScoped<WebLoggerFilter>();
+        }
 
-            ConfigureIoCApp(services);
+        private void ConfigureCors(IServiceCollection services)
+        {
+            // Permite que la Api se publica o para un grupo determinado de clientes
+            services.AddCors(o => o.AddPolicy(myPolicy, builder =>
+            {
+                builder.AllowAnyOrigin() // Se puede configurar los endpoint clientes aqui
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         private void ConfigureIoCApp(IServiceCollection services)
