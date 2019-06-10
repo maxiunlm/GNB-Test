@@ -5,6 +5,7 @@ using System.Net;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Data.Model;
 using Data.Base;
@@ -13,16 +14,19 @@ namespace Data
 {
     public class RateData : IRateData
     {
-        private const string ratesUrl = "http://quiet-stone-2094.herokuapp.com/rates.json";
-        private const string ratesCollectionName = "Rates";
-
+        private readonly string ratesUrl;
+        private readonly string ratesCollectionName;
+        private readonly IConfiguration configuration;
         private readonly IHttpClientFactory httpClientFactory;
         private readonly HttpClient client;
 
-        public RateData(IHttpClientFactory httpClientFactory)
+        public RateData(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
+            ratesUrl = configuration["RatesUrl"];
+            ratesCollectionName = configuration["RatesCollectionName"];
             this.httpClientFactory = httpClientFactory;
             client = this.httpClientFactory.CreateClient();
+            this.configuration = configuration;
         }
 
         public async Task<List<CurrencyConvertion>> ListRates()
@@ -36,7 +40,7 @@ namespace Data
             }
             catch (Exception)
             {
-                MongoDal mongoDal = new MongoDal(ratesCollectionName);
+                MongoDal mongoDal = new MongoDal(ratesCollectionName, configuration);
                 rates = mongoDal.GetList<CurrencyConvertion>();
             }
 
@@ -45,7 +49,7 @@ namespace Data
 
         public void InsertOrUpdateRates(List<CurrencyConvertion> rates)
         {
-            MongoDal mongoDal = new MongoDal(ratesCollectionName);
+            MongoDal mongoDal = new MongoDal(ratesCollectionName, configuration);
 
             foreach (CurrencyConvertion rate in rates)
             {

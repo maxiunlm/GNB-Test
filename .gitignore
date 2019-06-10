@@ -53,3 +53,14 @@ GnbWebServices/GnbApiRestful/Webapi/obj/Debug/netcoreapp2.2/Webapi.RazorAssembly
 GnbWebServices/GnbApiRestful/Webapi/obj/Debug/netcoreapp2.2/Webapi.RazorTargetAssemblyInfo.cache
 GnbWebServices/GnbApiRestful/Webapi/obj/Webapi.csproj.nuget.g.props
 GnbWebServices/GnbApiRestful/Webapi/obj/Webapi.csproj.nuget.g.targets
+*.cache
+*.txt
+GnbWebServices/GnbApiRestful/Tests/obj/Tests.csproj.nuget.g.targets
+GnbWebServices/GnbApiRestful/Tests/obj/Tests.csproj.nuget.g.props
+GnbWebServices/GnbApiRestful/Tests/obj/project.assets.json
+GnbWebServices/GnbApiRestful/Tests/obj/Debug/netcoreapp2.2/Tests.Program.cs
+GnbWebServices/GnbApiRestful/Tests/obj/Debug/netcoreapp2.2/Tests.csproj.CopyComplete
+GnbWebServices/GnbApiRestful/Tests/obj/Debug/netcoreapp2.2/Tests.AssemblyInfo.cs
+GnbWebServices/GnbApiRestful/Tests/bin/Debug/netcoreapp2.2/Tests.runtimeconfig.json
+GnbWebServices/GnbApiRestful/Tests/bin/Debug/netcoreapp2.2/Tests.runtimeconfig.dev.json
+GnbWebServices/GnbApiRestful/Tests/bin/Debug/netcoreapp2.2/Tests.deps.json

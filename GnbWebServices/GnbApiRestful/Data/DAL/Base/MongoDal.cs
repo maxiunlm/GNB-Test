@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using MongoDB.Bson;
@@ -11,17 +12,26 @@ namespace Data.Base
     public class MongoDal
     {
         private const string idKey = "id";
-        private const string serverHost = "mongodb://localhost:27017";
-        private const string defaultDatabaseName = "GnbDataBase";
+        private readonly IConfiguration configuration;
         private MongoClient client;
         private IMongoDatabase database;
         private string databaseName;
         private string collectionName;
 
-        public MongoDal(string collectionName, string databaseName = defaultDatabaseName)
+        public MongoDal(string collectionName, IConfiguration configuration, string databaseName = null)
         {
-            this.databaseName = databaseName;
+            if (databaseName == null)
+            {
+                this.databaseName = configuration["DefaultDatabaseName"];
+            }
+            else
+            {
+                this.databaseName = databaseName;
+            }
+
+            string serverHost = configuration["MongoDbServerHost"];
             this.collectionName = collectionName;
+            this.configuration = configuration;
             client = new MongoClient(serverHost);
             database = client.GetDatabase(databaseName);
         }

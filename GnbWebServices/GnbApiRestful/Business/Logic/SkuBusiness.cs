@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Data;
 using Business.Model;
 using AutoMapper;
@@ -11,15 +12,16 @@ namespace Business
     public class SkuBusiness : ISkuBusiness
     {
         private const int digits = 2;
-        private const string defualtCurrency = "EUR";
+        private readonly string defualtCurrency;
         private readonly ISkuData data;
         private readonly IRateBusiness rateBusiness;
         private readonly IMapper mapper;
 
-        public SkuBusiness(IRateBusiness rateBusiness, ISkuData data)
+        public SkuBusiness(IRateBusiness rateBusiness, ISkuData data, IConfiguration configuration)
         {
             this.data = data;
             this.rateBusiness = rateBusiness;
+            defualtCurrency = configuration["DefualtCurrency"];
 
             MapperConfiguration automappingConfiguration = new MapperConfiguration(config =>
             {
