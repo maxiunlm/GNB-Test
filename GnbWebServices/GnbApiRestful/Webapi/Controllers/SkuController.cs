@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 using Webapi.Model;
+using Webapi.Filters;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
 using AutoMapper;
@@ -37,38 +38,26 @@ namespace Webapi.Controllers
         // GET api/Sku
         [HttpGet]
         [EnableCors("MyPolicy")]
+        [ServiceFilter(typeof(WebExceptionFilter))]
+        [ServiceFilter(typeof(WebLoggerFilter))]
         public ActionResult<List<string>> Get()
         {
-            try
-            {
-                List<string> skus = service.ListSkus();
+            List<string> skus = service.ListSkus();
 
-                return skus;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Getting all Skus", null);
-                throw;
-            }
+            return skus;
         }
 
         // GET api/Sku/summary/C8514
         [HttpGet("summary/{sku}")]
         [EnableCors("MyPolicy")]
+        [ServiceFilter(typeof(WebExceptionFilter))]
+        [ServiceFilter(typeof(WebLoggerFilter))]
         public async Task<ActionResult<Sku>> Get(string sku)
         {
-            try
-            {
-                Service.Model.Sku oroginData = await service.GetTransactionsBySku(sku);
-                Sku skuModel = mapper.Map<Sku>(oroginData);
+            Service.Model.Sku oroginData = await service.GetTransactionsBySku(sku);
+            Sku skuModel = mapper.Map<Sku>(oroginData);
 
-                return skuModel;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, $"Getting all Transactions by Sku '{sku}'", null);
-                throw;
-            }
+            return skuModel;
         }
 
         // POST api/Sku

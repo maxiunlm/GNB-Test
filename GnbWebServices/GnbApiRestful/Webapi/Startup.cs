@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Webapi.Controllers;
+using Webapi.Filters;
 using Service;
 using Business;
 using Data;
@@ -46,7 +47,13 @@ namespace Webapi
             }));
 
             services.AddHttpClient();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(o =>
+            {
+                o.Filters.Add(typeof(WebExceptionFilter));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped<WebExceptionFilter>();
+            services.AddScoped<WebLoggerFilter>();
 
             ConfigureIoCApp(services);
         }

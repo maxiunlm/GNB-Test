@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 using Webapi.Model;
+using Webapi.Filters;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors;
 using AutoMapper;
@@ -35,20 +36,14 @@ namespace Webapi.Controllers
         // GET api/Transactions
         [HttpGet]
         [EnableCors("MyPolicy")]
+        [ServiceFilter(typeof(WebExceptionFilter))]
+        [ServiceFilter(typeof(WebLoggerFilter))]
         public async Task<ActionResult<List<Transaction>>> Get()
         {
-            try
-            {
-                List<Service.Model.Transaction> oroginData = await service.ListTransactions();
-                List<Transaction> transactions = mapper.Map<List<Transaction>>(oroginData);
+            List<Service.Model.Transaction> oroginData = await service.ListTransactions();
+            List<Transaction> transactions = mapper.Map<List<Transaction>>(oroginData);
 
-                return transactions;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Getting all Transactions", null);
-                throw;
-            }
+            return transactions;
         }
     }
 }
