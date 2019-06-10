@@ -10,17 +10,31 @@ Además, es necesario un plan B en caso que el webservice del que obtenemos la i
 ## Requisitos
 
  * Puedes utilizar cualquier framework y cualquier librería de terceros.
+  >* El Servicio usa netcoreapp2.2
+  >* El Cliente implemente un React.Js 16.8.6 
  * Recuerda que pueden faltar algunas conversiones, deberás calcularlas mediante la información que tengas.
  * Separación de responsabilidades en distintas capas
+  >* Es Servicio  es un sistema cuatri-capas (Controlller-Service-Business-Data).
+  >* El Cliente es bicapa (Presenter-Client).
  * Implementación de log de error y manejo de excepciones en cada capa.
+  >* El Log saldrá por consola, dado que no puedo configurar carpetas en máquinas ajenas.
+  >* El manejo de Exceptions y la Auditoría se hacm mediante los Filters de tipo:
+  >>* ExceptionFilterAttribute
+  >>* ActionFilterAttribute
  * Tener en cuenta los principios SOLID y correcta capitalización del código.
+  >* A travez del uso de Interfaces, la división de capas, la delegación de responsabilidades y demás practicas de la programación Orientada a Objetos considero haber cumplido con este Objetivo.
  * Uso de Inyección de dependencias.
+  >* El servicio utiliza la Inyección de Dependencias (vía Constructor) y la Inversión de Control del .NET Core, mediante el package 'Microsoft.Extensions.DependencyInjection'
  * Tests unitarios.
+  >* Para el Servicio, implementé los Unit Tests mediante MSTest, la herramienta que propone el mismo .NET Core. Además del uso de Moq como herramienta de Mocking.
+  >* En el cliente los tests están desarrollados con Jasmine y Jest  
 
 ## Puntos extra (No obligatorios)
 
  * Estamos tratando con divisas, intenta no utilizar números con coma flotante.
+  >* En el Servidor, todo número con coma, es del tipo de dato DECIMAL, que es mucho más preciso que el tipo DOUBLE.
  * Después de cada conversión, el resultado debe ser redondeado a dos decimales usando el redondeo Bank
+  >* Entiendo haber resuelto esto al hacer que el Redondeo de los números considere que los números con 3 decimales, tomen por ejemplo >= que 0.005 como 0.01 y si es < que 0.005 entonces es un 0 (cero)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -35,7 +49,8 @@ docker run -d -p 27017:27017  --hostname my-mongo --name maxi-mongo mongo
 ```bash
 $ git clone git://github.com/maxiunlm/GNB-Test.git
 ```
- 3. Seguir los pasos de 'Ejecutar el proyecto' de 'Web Service (Web Api)' y de 'Web Client' en ese orden.
+ 3. Desde la línea de comandos, posicionarse en la carpeta dinde se haya descargado el Sistema completo desde el GIT.
+ 4. Seguir los pasos de 'Ejecutar el proyecto' de 'Web Service (Web Api)' y de 'Web Client' en ese orden.
 
 ----------------------------------------------------------------------------------------------------------
 
