@@ -33,7 +33,7 @@ namespace Data.Base
             this.collectionName = collectionName;
             this.configuration = configuration;
             client = new MongoClient(serverHost);
-            database = client.GetDatabase(databaseName);
+            database = client.GetDatabase(this.databaseName);
         }
 
         public List<T> GetList<T>() where T : IData
