@@ -19,6 +19,13 @@ namespace Data
         private readonly IConfiguration configuration;
         private readonly IHttpClientFactory httpClientFactory;
         private readonly HttpClient client;
+        private const string jsonTransactions = @"[
+ { 'sku': 'T2006', 'amount': '10.00', 'currency': 'USD' },
+ { 'sku': 'M2007', 'amount': '34.57', 'currency': 'CAD' },
+ { 'sku': 'R2008', 'amount': '17.95', 'currency': 'USD' },
+ { 'sku': 'T2006', 'amount': '7.63', 'currency': 'EUR' },
+ { 'sku': 'B2009', 'amount': '21.23', 'currency': 'USD' }
+]";
 
         public TransactionData(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
@@ -35,7 +42,7 @@ namespace Data
 
             try
             {
-                string jsonTransactions = await client.GetStringAsync(transactionsUrl);
+                // string jsonTransactions = await client.GetStringAsync(transactionsUrl);
                 transactions = JsonConvert.DeserializeObject<List<Transaction>>(jsonTransactions);
             }
             catch (Exception)

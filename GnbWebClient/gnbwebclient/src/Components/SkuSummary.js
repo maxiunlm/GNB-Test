@@ -37,7 +37,6 @@ export default class SkuSummary extends Component {
                                     onClick={this.props.onShowTransactionsClick}
                                 >&lt; Transacciones</button>
                                 <button
-                                    disabled={context.loadSkuDisnabled}
                                     className="btn btn-secondary skuMenuButton"
                                     onClick={this.props.onShowRatesClick}
                                 >Conversiones (Rates) &gt;</button>

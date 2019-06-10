@@ -9,7 +9,7 @@ import Rates from './Rates';
 import Transactions from './Transactions';
 import SkuSummary from './SkuSummary';
 
-const stringEmty = '';
+const emstyString = '';
 const visible = '';
 const invisible = 'hidden';
 
@@ -25,7 +25,7 @@ export default class GnbApp extends Component {
             skuOptions: [],
             rates: [],
             transactions: [],
-            selectedSku: stringEmty,
+            selectedSku: emstyString,
             totlSku: 0,
             skuSummaryVisibility: visible,
             transactionsVisibility: invisible,
@@ -39,7 +39,6 @@ export default class GnbApp extends Component {
         this.onShowTransactionsClick = this.onShowTransactionsClick.bind(this);
         this.getRatesContextData = this.getRatesContextData.bind(this);
         this.getSkuOptions = this.getSkuOptions.bind(this);
-        this.getId = this.getId.bind(this);
     }
 
     async componentDidMount() {
@@ -103,10 +102,6 @@ export default class GnbApp extends Component {
         return options
     }
 
-    getId() {
-        return ++this.id;
-    }
-
     getRatesContextData() {
         let ratesContextData = {
             ratesVisibility: this.state.ratesVisibility,
@@ -134,7 +129,6 @@ export default class GnbApp extends Component {
         let skuSummaryContextData = {
             skuSummaryVisibility: this.state.skuSummaryVisibility,
             spinnerVisibility: this.state.spinnerVisibility,
-            loadSkuDisnabled: this.state.loadSkuDisnabled,
             options: options,
             transactions: transactionsSku
         };

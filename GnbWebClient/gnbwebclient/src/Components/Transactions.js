@@ -33,7 +33,6 @@ export default class Transactions extends Component {
                             <div>
                                 <div className="btn-group float-right" role="group" aria-label="Menu">
                                     <button
-                                        disabled={context.loadSkuDisnabled}
                                         className="btn btn-secondary skuMenuButton"
                                         onClick={this.props.onShowRatesClick}
                                     >&lt; Conversiones (Rates)</button>
