@@ -89,6 +89,17 @@ dotnet run --project ./GnbApiRestful/Webapi/Webapi.csproj
   * Transactions: http://localhost:5000/api/Transaction
   * Sku List: http://localhost:5000/api/Sku
   * SKU: http://localhost:5000/api/Sku/summary/skuId (skuId: puede salir de uno de los valores de 'Sku List')
+  
+#### Agregar packages
+Solo en el caso de que no tenga instalado los packages necesarios, ejecute los siguientes comandos para instalar/restaurar los Packages de la aplicación:
+
+```bash
+dotnet restore ./GnbApiRestful/Data/Data.csproj
+dotnet restore ./GnbApiRestful/Business/Business.csproj
+dotnet restore ./GnbApiRestful/Service/Service.csproj
+dotnet restore ./GnbApiRestful/Webapi/Webapi.csproj
+dotnet restore ./GnbApiRestful/Tests/Tests.csproj 
+```
 
 ----------------------------------------------------------------------------------------------------------
 
@@ -98,6 +109,13 @@ Es una aplicación Web (Frontend) desarrollada con React.Js (corriendo sobre Nod
 Esta orientada a objetos y se encuentra dividida en Capas:
  1. Presenter: Son los componentes React.js de la UI.
  2. Client: Son los clientes que se encargan de la comunicación con el Servicio (la WebApi).
+ 
+### Instalar Packages
+Ejecutar la siguiente lines de comandos para restaurar los Packages y dependencias del proyecto:
+
+```bash
+yarn install
+```
 
 ### Ejecutar Pruebas (Tests)
 En la carpeta del Proyecto Cliente (./GnbWebClient/gnbwebclient/), ejecutar el comando:
@@ -123,6 +141,6 @@ npm start
 
 ### Abrir en el Navegador Web
 http://localhost:3000/
-
+ 
 # Licencia
 [MIT](https://choosealicense.com/licenses/mit/)
