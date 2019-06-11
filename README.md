@@ -45,6 +45,13 @@ Además, es necesario un plan B en caso que el webservice del que obtenemos la i
 docker pull mongo
 docker run -d -p 27017:27017  --hostname my-mongo --name maxi-mongo mongo
 ```
+
+Si bien con esto  es suficiente para descargar, instalar y ejecutar una imagen (Docker) de MongoDB, posteriormente se podrá correr esta imagen con el comando:
+
+```bash
+docker run --rm -d -p 27017:27017/tcp mongo:latest
+```
+
  2. Crear un Carpeta, con nombre a elección del usuario (por ej. 'GNB-Examen-MaximilianoGauna'), ingresar a esta y ejecutar el comando:
 ```bash
 $ git clone git://github.com/maxiunlm/GNB-Test.git
