@@ -66,7 +66,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public async Task ListTransactions_WithoutParameters_InvokesListTransactionsMethodFromServicesLayer()
+        public async Task ListTransactions_WithoutParameters_InvokesListTransactionsMethodFromDataLayer()
         {
             Mock<ITransactionData> data = new Mock<ITransactionData>();
             data.Setup(m => m.ListTransactions()).Returns(Task.FromResult(oneTransaction));
@@ -79,7 +79,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public async Task ListTransactions_WithoutParameters_InvokesRefreshTransactionsMethodFromServicesLayer()
+        public async Task ListTransactions_WithoutParameters_InvokesRefreshTransactionsMethodFromDataLayer()
         {
             Mock<ITransactionData> data = new Mock<ITransactionData>();
             data.Setup(m => m.ListTransactions()).Returns(Task.FromResult(oneTransaction));

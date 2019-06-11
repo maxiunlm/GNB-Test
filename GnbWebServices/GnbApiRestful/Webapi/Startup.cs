@@ -40,11 +40,11 @@ namespace Webapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureCors(services);
             services.AddHttpClient();
             ConfigureFilters(services);
             ConfigureMapping(services);
             ConfigureIoCApp(services);
+            ConfigureCors(services);
         }
 
         private void ConfigureMapping(IServiceCollection services)
@@ -69,17 +69,6 @@ namespace Webapi
             services.AddScoped<WebLoggerFilter>();
         }
 
-        private void ConfigureCors(IServiceCollection services)
-        {
-            // Permite que la Api se publica o para un grupo determinado de clientes
-            services.AddCors(o => o.AddPolicy(myPolicy, builder =>
-            {
-                builder.AllowAnyOrigin() // Se puede configurar los endpoint clientes aqui
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-        }
-
         private void ConfigureIoCApp(IServiceCollection services)
         {
             // IoC - Transient: A new instance Per Call
@@ -89,9 +78,27 @@ namespace Webapi
             services.AddTransient<ISkuBusiness, SkuBusiness>();
             services.AddTransient<IRateBusiness, RateBusiness>();
             services.AddTransient<ITransactionBusiness, TransactionBusiness>();
+            services.AddTransient<IBankCalculus, BankCalculus>();
             services.AddTransient<ISkuData, SkuData>();
             services.AddTransient<IRateData, RateData>();
             services.AddTransient<ITransactionData, TransactionData>();
+        }
+
+        private void ConfigureCors(IServiceCollection services)
+        {
+            // Permite que la Api se publica o para un grupo determinado de clientes
+            services.AddCors(o => o.AddPolicy(myPolicy, builder =>
+            {
+                // // Se puede configurar los endpoint clientes aqui
+                // builder.WithOrigins("http://localhost:300")
+                //         .WithMethods("GET")
+                //         .WithHeaders("name");
+                // o se puede abrir a cualquier cliente
+                builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                // .AllowCredentials(); // No es necesario en este Ejemplo
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

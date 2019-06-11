@@ -83,7 +83,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public async Task ListRates_WithoutParameters_InvokesListRatesMethodFromServicesLayer()
+        public async Task ListRates_WithoutParameters_InvokesListRatesMethodFromDataLayer()
         {
             Mock<IRateData> data = new Mock<IRateData>();
             data.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
@@ -96,7 +96,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public async Task ListRates_WithoutParameters_InvokesInsertOrUpdateRatesMethodFromServicesLayer()
+        public async Task ListRates_WithoutParameters_InvokesInsertOrUpdateRatesMethodFromDataLayer()
         {
             Mock<IRateData> data = new Mock<IRateData>();
             data.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));

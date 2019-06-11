@@ -64,7 +64,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public async Task ListTransactions_WithoutParameters_InvokesListTransactionsMethodFromServicesLayer()
+        public async Task ListTransactions_WithoutParameters_InvokesListTransactionsMethodFromBusinessLayer()
         {
             Mock<ITransactionBusiness> business = new Mock<ITransactionBusiness>();
             business.Setup(m => m.ListTransactions()).Returns(Task.FromResult(oneTransaction));

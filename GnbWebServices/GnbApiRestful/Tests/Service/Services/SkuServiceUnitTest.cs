@@ -56,7 +56,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void ListSkus_WithoutParameters_InvokesListSkusMethodFromServicesLayer()
+        public void ListSkus_WithoutParameters_InvokesListSkusMethodFromBusinessLayer()
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
             business.Setup(m => m.ListSkus()).Returns(oneSku);
@@ -130,7 +130,7 @@ namespace Tests
         #region GetTransactionsBySku
 
         [TestMethod]
-        public async Task GetTransactionsBySku_WithAnSkuId_InvokesGetTransactionsBySkuMethodFromServicesLayer()
+        public async Task GetTransactionsBySku_WithAnSkuId_InvokesGetTransactionsBySkuMethodFromBusinessLayer()
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
             business.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(Task.FromResult(fullSku));

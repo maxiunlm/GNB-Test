@@ -62,7 +62,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public async Task ListRates_WithoutParameters_InvokesListRatesMethodFromServicesLayer()
+        public async Task ListRates_WithoutParameters_InvokesListRatesMethodFromBusinessLayer()
         {
             Mock<IRateBusiness> business = new Mock<IRateBusiness>();
             business.Setup(m => m.ListRates()).Returns(Task.FromResult(oneCurrencyConvertion));
