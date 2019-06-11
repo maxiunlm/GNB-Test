@@ -45,6 +45,13 @@ Además, es necesario un plan B en caso que el webservice del que obtenemos la i
 docker pull mongo
 docker run -d -p 27017:27017  --hostname my-mongo --name maxi-mongo mongo
 ```
+
+Si bien con esto  es suficiente para descargar, instalar y ejecutar una imagen (Docker) de MongoDB, posteriormente se podrá correr esta imagen con el comando:
+
+```bash
+docker run --rm -d -p 27017:27017/tcp mongo:latest
+```
+
  2. Crear un Carpeta, con nombre a elección del usuario (por ej. 'GNB-Examen-MaximilianoGauna'), ingresar a esta y ejecutar el comando:
 ```bash
 $ git clone git://github.com/maxiunlm/GNB-Test.git
@@ -93,7 +100,7 @@ Esta orientada a objetos y se encuentra dividida en Capas:
  2. Client: Son los clientes que se encargan de la comunicación con el Servicio (la WebApi).
 
 ### Ejecutar el proyecto
-En la carpeta del Proyecto Cliente, ejecutar el comando:
+En la carpeta del Proyecto Cliente (./GnbWebClient/gnbwebclient/), ejecutar el comando:
  
 ```bash
 yarn start
@@ -104,7 +111,7 @@ npm start
 ```
 
 ### Ejecutar Pruebas (Tests)
-En la carpeta del Proyecto Cliente, ejecutar el comando:
+En la carpeta del Proyecto Cliente (./GnbWebClient/gnbwebclient/), ejecutar el comando:
 
 ```bash
 yarn test
@@ -138,7 +145,7 @@ cd gnbwebclient
  
 ## Creación del Servicio (WebApi)
 
-A modo informativo, estos son los pasos que seguí para crear el Servicio. Usted no debería volverlos a ejecutar.
+A modo informativo, estos son los pasos que seguí para crear el Servicio. Usted no debería volverlos a ejecutar, simpre desde la carpeta './GnbWebServices/'.
 
 #### Crear proyectos
 ```bash
