@@ -127,6 +127,8 @@ export default class GnbApp extends Component {
         let transactionsSku = this.state.transactionsSku || [];
 
         let skuSummaryContextData = {
+            selectedSku: this.state.selectedSku,
+            totlSku: this.state.totlSku,
             skuSummaryVisibility: this.state.skuSummaryVisibility,
             spinnerVisibility: this.state.spinnerVisibility,
             options: options,
