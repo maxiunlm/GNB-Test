@@ -1,6 +1,3 @@
-const methodGet = 'GET';
-const applicationJson = 'application/json';
-
 export default class ClientBase {
     async fetch(uri) {
         try {
@@ -28,10 +25,10 @@ export default class ClientBase {
 
     getRequestOptions() {
         let headers = new Headers({
-            'Content-Type': applicationJson
+            'Content-Type': process.env.REACT_APP_applicationJson
         });
         let requestOptions = {
-            method: methodGet,
+            method: process.env.REACT_APP_methodGet,
             headers: headers
         };
 

@@ -13,9 +13,9 @@ export default class SkuClient extends ClientBase {
     }
 
     async listSkus() {
-        let skusInfo = await this.fetch(process.env.REACT_APP_skusWebapiEndpoint);
+        let skus = await this.fetch(process.env.REACT_APP_skusWebapiEndpoint);
 
-        return skusInfo;
+        return skus;
     }
 
     async getSku(sku) {
