@@ -12,6 +12,7 @@ using Service;
 using Business;
 using Data;
 using Moq;
+using Tests.Fakes;
 
 namespace Tests
 {
@@ -19,14 +20,7 @@ namespace Tests
     public class TransactionControllerUnitTest
     {
         #region Fixture
-
-        private const decimal firstAmount = 1.359M;
-        private const decimal secondAmount = 0.736M;
-        private const string firstCurrency = "EUR";
-        private const string firstSku = "T2006";
-        private const string secondCurrency = "USD";
-        private const string secondSku = "M2007";
-        private const string excpetionMessage = "excpetionMessage";
+        private CommonFakes commonFakes = new CommonFakes();
 
         private static readonly List<Service.Model.Transaction> emptyTransactions = new List<Service.Model.Transaction>();
         private static readonly List<Service.Model.Transaction> oneTransaction = new List<Service.Model.Transaction>
@@ -40,17 +34,17 @@ namespace Tests
         };
         private static readonly Service.Model.Transaction firstTransaction = new Service.Model.Transaction
         {
-            Sku = firstSku,
-            Currency = firstCurrency,
-            Amount = firstAmount
+            Sku = CommonFakes.firstSku,
+            Currency = CommonFakes.firstCurrency,
+            Amount = CommonFakes.firstAmount
         };
         private static readonly Service.Model.Transaction secondTransaction = new Service.Model.Transaction
         {
-            Sku = secondSku,
-            Currency = secondCurrency,
-            Amount = secondAmount
+            Sku = CommonFakes.secondSku,
+            Currency = CommonFakes.secondCurrency,
+            Amount = CommonFakes.secondAmount
         };
-        private static readonly Exception exception = new Exception(excpetionMessage);
+        private static readonly Exception exception = new Exception(CommonFakes.excpetionMessage);
 
         #endregion
 
@@ -62,7 +56,7 @@ namespace Tests
             Mock<ILogger<TransactionController>> logger = new Mock<ILogger<TransactionController>>();
             Mock<ITransactionService> service = new Mock<ITransactionService>();
             service.Setup(o => o.ListTransactions()).Returns(Task.FromResult(oneTransaction));
-            TransactionController sut = new TransactionController(service.Object, logger.Object);
+            TransactionController sut = new TransactionController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<Transaction>> actionResult = await sut.Get();
             List<Transaction> result = (List<Transaction>)actionResult.Value;
@@ -76,7 +70,7 @@ namespace Tests
             Mock<ILogger<TransactionController>> logger = new Mock<ILogger<TransactionController>>();
             Mock<ITransactionService> service = new Mock<ITransactionService>();
             service.Setup(m => m.ListTransactions()).Returns(Task.FromResult(oneTransaction));
-            TransactionController sut = new TransactionController(service.Object, logger.Object);
+            TransactionController sut = new TransactionController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<Transaction>> actionResult = await sut.Get();
             List<Transaction> result = (List<Transaction>)actionResult.Value;
@@ -90,7 +84,7 @@ namespace Tests
             Mock<ILogger<TransactionController>> logger = new Mock<ILogger<TransactionController>>();
             Mock<ITransactionService> service = new Mock<ITransactionService>();
             service.Setup(m => m.ListTransactions()).Returns(Task.FromResult(emptyTransactions));
-            TransactionController sut = new TransactionController(service.Object, logger.Object);
+            TransactionController sut = new TransactionController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<Transaction>> actionResult = await sut.Get();
             List<Transaction> result = (List<Transaction>)actionResult.Value;
@@ -104,7 +98,7 @@ namespace Tests
             Mock<ILogger<TransactionController>> logger = new Mock<ILogger<TransactionController>>();
             Mock<ITransactionService> service = new Mock<ITransactionService>();
             service.Setup(m => m.ListTransactions()).Returns(Task.FromResult(oneTransaction));
-            TransactionController sut = new TransactionController(service.Object, logger.Object);
+            TransactionController sut = new TransactionController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<Transaction>> actionResult = await sut.Get();
             List<Transaction> result = (List<Transaction>)actionResult.Value;
@@ -118,7 +112,7 @@ namespace Tests
             Mock<ILogger<TransactionController>> logger = new Mock<ILogger<TransactionController>>();
             Mock<ITransactionService> service = new Mock<ITransactionService>();
             service.Setup(m => m.ListTransactions()).Returns(Task.FromResult(twoTransactions));
-            TransactionController sut = new TransactionController(service.Object, logger.Object);
+            TransactionController sut = new TransactionController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<Transaction>> actionResult = await sut.Get();
             List<Transaction> result = (List<Transaction>)actionResult.Value;
@@ -132,7 +126,7 @@ namespace Tests
             Mock<ILogger<TransactionController>> logger = new Mock<ILogger<TransactionController>>();
             Mock<ITransactionService> service = new Mock<ITransactionService>();
             service.Setup(m => m.ListTransactions()).Throws(exception);
-            TransactionController sut = new TransactionController(service.Object, logger.Object);
+            TransactionController sut = new TransactionController(service.Object, commonFakes.Mapper);
 
             try
             {

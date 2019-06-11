@@ -12,6 +12,7 @@ using Service;
 using Business;
 using Data;
 using Moq;
+using Tests.Fakes;
 
 namespace Tests
 {
@@ -19,15 +20,7 @@ namespace Tests
     public class RateControllerUnitTest
     {
         #region Fixture
-
-        private const decimal firstRate = 1.359M;
-        private const decimal secondRate = 0.736M;
-        private const string firstFrom = "EUR";
-        private const string firstTo = "USD";
-        private const string secondFrom = "USD";
-        private const string secondTo = "EUR";
-        private const string excpetionMessage = "excpetionMessage";
-
+        private CommonFakes commonFakes = new CommonFakes();
         private static readonly List<Service.Model.CurrencyConvertion> emptyCurrencyConvertions = new List<Service.Model.CurrencyConvertion>();
         private static readonly List<Service.Model.CurrencyConvertion> oneCurrencyConvertion = new List<Service.Model.CurrencyConvertion>
         {
@@ -40,17 +33,17 @@ namespace Tests
         };
         private static readonly Service.Model.CurrencyConvertion firstCurrencyConvertion = new Service.Model.CurrencyConvertion
         {
-            From = firstFrom,
-            To = firstTo,
-            Rate = firstRate
+            From = CommonFakes.firstFrom,
+            To = CommonFakes.firstTo,
+            Rate = CommonFakes.firstRate
         };
         private static readonly Service.Model.CurrencyConvertion secondCurrencyConvertion = new Service.Model.CurrencyConvertion
         {
-            From = secondFrom,
-            To = secondTo,
-            Rate = secondRate
+            From = CommonFakes.secondFrom,
+            To = CommonFakes.secondTo,
+            Rate = CommonFakes.secondRate
         };
-        private static readonly Exception exception = new Exception(excpetionMessage);
+        private static readonly Exception exception = new Exception(CommonFakes.excpetionMessage);
 
         #endregion
 
@@ -62,7 +55,7 @@ namespace Tests
             Mock<ILogger<RateController>> logger = new Mock<ILogger<RateController>>();
             Mock<IRateService> service = new Mock<IRateService>();
             service.Setup(o => o.ListRates()).Returns(Task.FromResult(oneCurrencyConvertion));
-            RateController sut = new RateController(service.Object, logger.Object);
+            RateController sut = new RateController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<CurrencyConvertion>> actionResult = await sut.Get();
             List<CurrencyConvertion> result = (List<CurrencyConvertion>)actionResult.Value;
@@ -76,7 +69,7 @@ namespace Tests
             Mock<ILogger<RateController>> logger = new Mock<ILogger<RateController>>();
             Mock<IRateService> service = new Mock<IRateService>();
             service.Setup(m => m.ListRates()).Returns(Task.FromResult(oneCurrencyConvertion));
-            RateController sut = new RateController(service.Object, logger.Object);
+            RateController sut = new RateController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<CurrencyConvertion>> actionResult = await sut.Get();
             List<CurrencyConvertion> result = (List<CurrencyConvertion>)actionResult.Value;
@@ -90,7 +83,7 @@ namespace Tests
             Mock<ILogger<RateController>> logger = new Mock<ILogger<RateController>>();
             Mock<IRateService> service = new Mock<IRateService>();
             service.Setup(m => m.ListRates()).Returns(Task.FromResult(emptyCurrencyConvertions));
-            RateController sut = new RateController(service.Object, logger.Object);
+            RateController sut = new RateController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<CurrencyConvertion>> actionResult = await sut.Get();
             List<CurrencyConvertion> result = (List<CurrencyConvertion>)actionResult.Value;
@@ -104,7 +97,7 @@ namespace Tests
             Mock<ILogger<RateController>> logger = new Mock<ILogger<RateController>>();
             Mock<IRateService> service = new Mock<IRateService>();
             service.Setup(m => m.ListRates()).Returns(Task.FromResult(oneCurrencyConvertion));
-            RateController sut = new RateController(service.Object, logger.Object);
+            RateController sut = new RateController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<CurrencyConvertion>> actionResult = await sut.Get();
             List<CurrencyConvertion> result = (List<CurrencyConvertion>)actionResult.Value;
@@ -118,7 +111,7 @@ namespace Tests
             Mock<ILogger<RateController>> logger = new Mock<ILogger<RateController>>();
             Mock<IRateService> service = new Mock<IRateService>();
             service.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
-            RateController sut = new RateController(service.Object, logger.Object);
+            RateController sut = new RateController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<CurrencyConvertion>> actionResult = await sut.Get();
             List<CurrencyConvertion> result = (List<CurrencyConvertion>)actionResult.Value;
@@ -132,7 +125,7 @@ namespace Tests
             Mock<ILogger<RateController>> logger = new Mock<ILogger<RateController>>();
             Mock<IRateService> service = new Mock<IRateService>();
             service.Setup(m => m.ListRates()).Throws(exception);
-            RateController sut = new RateController(service.Object, logger.Object);
+            RateController sut = new RateController(service.Object, commonFakes.Mapper);
 
             try
             {

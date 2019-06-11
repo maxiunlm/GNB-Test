@@ -11,6 +11,7 @@ using Service;
 using Business;
 using Data;
 using Moq;
+using Tests.Fakes;
 
 namespace Tests
 {
@@ -18,14 +19,7 @@ namespace Tests
     public class RateServiceUnitTest
     {
         #region Fixture
-
-        private const decimal firstRate = 1.359M;
-        private const decimal secondRate = 0.736M;
-        private const string firstFrom = "EUR";
-        private const string firstTo = "USD";
-        private const string secondFrom = "USD";
-        private const string secondTo = "EUR";
-        private const string excpetionMessage = "excpetionMessage";
+        private CommonFakes commonFakes = new CommonFakes();
 
         private static readonly List<Business.Model.CurrencyConvertion> emptyCurrencyConvertions = new List<Business.Model.CurrencyConvertion>();
         private static readonly List<Business.Model.CurrencyConvertion> oneCurrencyConvertion = new List<Business.Model.CurrencyConvertion>
@@ -39,17 +33,17 @@ namespace Tests
         };
         private static readonly Business.Model.CurrencyConvertion firstCurrencyConvertion = new Business.Model.CurrencyConvertion
         {
-            From = firstFrom,
-            To = firstTo,
-            Rate = firstRate
+            From = CommonFakes.firstFrom,
+            To = CommonFakes.firstTo,
+            Rate = CommonFakes.firstRate
         };
         private static readonly Business.Model.CurrencyConvertion secondCurrencyConvertion = new Business.Model.CurrencyConvertion
         {
-            From = secondFrom,
-            To = secondTo,
-            Rate = secondRate
+            From = CommonFakes.secondFrom,
+            To = CommonFakes.secondTo,
+            Rate = CommonFakes.secondRate
         };
-        private static readonly Exception exception = new Exception(excpetionMessage);
+        private static readonly Exception exception = new Exception(CommonFakes.excpetionMessage);
 
         #endregion
 
@@ -60,7 +54,7 @@ namespace Tests
         {
             Mock<IRateBusiness> business = new Mock<IRateBusiness>();
             business.Setup(m => m.ListRates()).Returns(Task.FromResult(oneCurrencyConvertion));
-            IRateService sut = new RateService(business.Object);
+            IRateService sut = new RateService(business.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -72,7 +66,7 @@ namespace Tests
         {
             Mock<IRateBusiness> business = new Mock<IRateBusiness>();
             business.Setup(m => m.ListRates()).Returns(Task.FromResult(oneCurrencyConvertion));
-            IRateService sut = new RateService(business.Object);
+            IRateService sut = new RateService(business.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -84,7 +78,7 @@ namespace Tests
         {
             Mock<IRateBusiness> business = new Mock<IRateBusiness>();
             business.Setup(m => m.ListRates()).Returns(Task.FromResult(emptyCurrencyConvertions));
-            IRateService sut = new RateService(business.Object);
+            IRateService sut = new RateService(business.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -96,7 +90,7 @@ namespace Tests
         {
             Mock<IRateBusiness> business = new Mock<IRateBusiness>();
             business.Setup(m => m.ListRates()).Returns(Task.FromResult(oneCurrencyConvertion));
-            IRateService sut = new RateService(business.Object);
+            IRateService sut = new RateService(business.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -108,7 +102,7 @@ namespace Tests
         {
             Mock<IRateBusiness> business = new Mock<IRateBusiness>();
             business.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
-            IRateService sut = new RateService(business.Object);
+            IRateService sut = new RateService(business.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -120,7 +114,7 @@ namespace Tests
         {
             Mock<IRateBusiness> business = new Mock<IRateBusiness>();
             business.Setup(m => m.ListRates()).Throws(exception);
-            IRateService sut = new RateService(business.Object);
+            IRateService sut = new RateService(business.Object, commonFakes.Mapper);
 
             try
             {

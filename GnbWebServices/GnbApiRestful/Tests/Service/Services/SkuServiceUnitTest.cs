@@ -12,6 +12,7 @@ using Business;
 using Data;
 using System;
 using Moq;
+using Tests.Fakes;
 
 namespace Tests
 {
@@ -19,30 +20,24 @@ namespace Tests
     public class SkuServiceUnitTest
     {
         #region Fixture
-
-        private const decimal total = 14.99M;
-        private const string defaultCurrency = "EUR";
-        private const string nonSku = "";
-        private const string firstSku = "E7719";
-        private const string secondSku = "E7719";
-        private const string excpetionMessage = "excpetionMessage";
+        private CommonFakes commonFakes = new CommonFakes();
 
         private static readonly List<string> emptySkus = new List<string>();
-        private static readonly List<string> oneSku = new List<string> { firstSku };
-        private static readonly List<string> twoSkus = new List<string> { firstSku, secondSku };
+        private static readonly List<string> oneSku = new List<string> { CommonFakes.firstSku };
+        private static readonly List<string> twoSkus = new List<string> { CommonFakes.firstSku, CommonFakes.secondSku };
         private static readonly Business.Model.Transaction firstTransaction = new Business.Model.Transaction
         {
-            Sku = firstSku,
-            Currency = defaultCurrency,
-            Amount = total
+            Sku = CommonFakes.firstSku,
+            Currency = CommonFakes.defaultCurrency,
+            Amount = CommonFakes.total
         };
         private static readonly Business.Model.Sku fullSku = new Business.Model.Sku
         {
-            Name = firstSku,
-            Total = total,
+            Name = CommonFakes.firstSku,
+            Total = CommonFakes.total,
             Transactions = new List<Business.Model.Transaction> { firstTransaction }
         };
-        private static readonly Exception exception = new Exception(excpetionMessage);
+        private static readonly Exception exception = new Exception(CommonFakes.excpetionMessage);
 
         #endregion
 
@@ -53,7 +48,7 @@ namespace Tests
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
             business.Setup(o => o.ListSkus()).Returns(oneSku);
-            ISkuService sut = new SkuService(business.Object);
+            ISkuService sut = new SkuService(business.Object, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -65,7 +60,7 @@ namespace Tests
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
             business.Setup(m => m.ListSkus()).Returns(oneSku);
-            ISkuService sut = new SkuService(business.Object);
+            ISkuService sut = new SkuService(business.Object, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -77,7 +72,7 @@ namespace Tests
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
             business.Setup(m => m.ListSkus()).Returns(emptySkus);
-            ISkuService sut = new SkuService(business.Object);
+            ISkuService sut = new SkuService(business.Object, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -89,7 +84,7 @@ namespace Tests
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
             business.Setup(m => m.ListSkus()).Returns(oneSku);
-            ISkuService sut = new SkuService(business.Object);
+            ISkuService sut = new SkuService(business.Object, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -102,7 +97,7 @@ namespace Tests
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
             business.Setup(m => m.ListSkus()).Returns(twoSkus);
-            ISkuService sut = new SkuService(business.Object);
+            ISkuService sut = new SkuService(business.Object, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -116,7 +111,7 @@ namespace Tests
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
             business.Setup(m => m.ListSkus()).Throws(exception);
-            ISkuService sut = new SkuService(business.Object);
+            ISkuService sut = new SkuService(business.Object, commonFakes.Mapper);
 
             try
             {
@@ -138,22 +133,22 @@ namespace Tests
         public async Task GetTransactionsBySku_WithAnSkuId_InvokesGetTransactionsBySkuMethodFromServicesLayer()
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
-            business.Setup(m => m.GetTransactionsBySku(firstSku)).Returns(Task.FromResult(fullSku));
-            ISkuService sut = new SkuService(business.Object);
+            business.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(Task.FromResult(fullSku));
+            ISkuService sut = new SkuService(business.Object, commonFakes.Mapper);
 
-            Sku result = await sut.GetTransactionsBySku(firstSku);
+            Sku result = await sut.GetTransactionsBySku(CommonFakes.firstSku);
 
-            business.Verify(m => m.GetTransactionsBySku(firstSku), Times.Once);
+            business.Verify(m => m.GetTransactionsBySku(CommonFakes.firstSku), Times.Once);
         }
 
         [TestMethod]
         public async Task GetTransactionsBySku_WithAnSkuId_ReturnsAFullSkuData()
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
-            business.Setup(m => m.GetTransactionsBySku(firstSku)).Returns(Task.FromResult(fullSku));
-            ISkuService sut = new SkuService(business.Object);
+            business.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(Task.FromResult(fullSku));
+            ISkuService sut = new SkuService(business.Object, commonFakes.Mapper);
 
-            Sku result = await sut.GetTransactionsBySku(firstSku);
+            Sku result = await sut.GetTransactionsBySku(CommonFakes.firstSku);
 
             Assert.AreEqual(fullSku.Name, result.Name);
             Assert.AreEqual(fullSku.Total, result.Total);
@@ -167,12 +162,12 @@ namespace Tests
         public async Task GetTransactionsBySku_CallsGetTransactionsBySkuMethodFromServicesLayer_WichThrowsAnException()
         {
             Mock<ISkuBusiness> business = new Mock<ISkuBusiness>();
-            business.Setup(m => m.GetTransactionsBySku(firstSku)).Throws(exception);
-            ISkuService sut = new SkuService(business.Object);
+            business.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Throws(exception);
+            ISkuService sut = new SkuService(business.Object, commonFakes.Mapper);
 
             try
             {
-                await sut.GetTransactionsBySku(firstSku);
+                await sut.GetTransactionsBySku(CommonFakes.firstSku);
 
                 Assert.IsTrue(false, "No exception thrown. Exception exception was expected.");
             }

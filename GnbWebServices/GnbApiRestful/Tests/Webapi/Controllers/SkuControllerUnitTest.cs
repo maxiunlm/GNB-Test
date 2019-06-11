@@ -12,6 +12,7 @@ using Service;
 using Business;
 using Data;
 using Moq;
+using Tests.Fakes;
 
 namespace Tests
 {
@@ -19,30 +20,23 @@ namespace Tests
     public class SkuControllerUnitTest
     {
         #region Fixture
-
-        private const decimal total = 14.99M;
-        private const string defaultCurrency = "EUR";
-        private const string nonSku = "";
-        private const string firstSku = "E7719";
-        private const string secondSku = "E7719";
-        private const string excpetionMessage = "excpetionMessage";
-
+        private CommonFakes commonFakes = new CommonFakes();
         private static readonly List<string> emptySkus = new List<string>();
-        private static readonly List<string> oneSku = new List<string> { firstSku };
-        private static readonly List<string> twoSkus = new List<string> { firstSku, secondSku };
+        private static readonly List<string> oneSku = new List<string> { CommonFakes.firstSku };
+        private static readonly List<string> twoSkus = new List<string> { CommonFakes.firstSku, CommonFakes.secondSku };
         private static readonly Service.Model.Transaction firstTransaction = new Service.Model.Transaction
         {
-            Sku = firstSku,
-            Currency = defaultCurrency,
-            Amount = total
+            Sku = CommonFakes.firstSku,
+            Currency = CommonFakes.defaultCurrency,
+            Amount = CommonFakes.total
         };
         private static readonly Service.Model.Sku fullSku = new Service.Model.Sku
         {
-            Name = firstSku,
-            Total = total,
+            Name = CommonFakes.firstSku,
+            Total = CommonFakes.total,
             Transactions = new List<Service.Model.Transaction> { firstTransaction }
         };
-        private static readonly Exception exception = new Exception(excpetionMessage);
+        private static readonly Exception exception = new Exception(CommonFakes.excpetionMessage);
 
         #endregion
 
@@ -54,7 +48,7 @@ namespace Tests
             Mock<ILogger<SkuController>> logger = new Mock<ILogger<SkuController>>();
             Mock<ISkuService> service = new Mock<ISkuService>();
             service.Setup(o => o.ListSkus()).Returns(oneSku);
-            SkuController sut = new SkuController(service.Object, logger.Object);
+            SkuController sut = new SkuController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<string>> actionResult = sut.Get();
             List<string> result = (List<string>)actionResult.Value;
@@ -68,7 +62,7 @@ namespace Tests
             Mock<ILogger<SkuController>> logger = new Mock<ILogger<SkuController>>();
             Mock<ISkuService> service = new Mock<ISkuService>();
             service.Setup(m => m.ListSkus()).Returns(oneSku);
-            SkuController sut = new SkuController(service.Object, logger.Object);
+            SkuController sut = new SkuController(service.Object, commonFakes.Mapper);
 
 
             ActionResult<List<string>> actionResult = sut.Get();
@@ -83,7 +77,7 @@ namespace Tests
             Mock<ILogger<SkuController>> logger = new Mock<ILogger<SkuController>>();
             Mock<ISkuService> service = new Mock<ISkuService>();
             service.Setup(m => m.ListSkus()).Returns(emptySkus);
-            SkuController sut = new SkuController(service.Object, logger.Object);
+            SkuController sut = new SkuController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<string>> actionResult = sut.Get();
             List<string> result = (List<string>)actionResult.Value;
@@ -97,7 +91,7 @@ namespace Tests
             Mock<ILogger<SkuController>> logger = new Mock<ILogger<SkuController>>();
             Mock<ISkuService> service = new Mock<ISkuService>();
             service.Setup(m => m.ListSkus()).Returns(oneSku);
-            SkuController sut = new SkuController(service.Object, logger.Object);
+            SkuController sut = new SkuController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<string>> actionResult = sut.Get();
             List<string> result = (List<string>)actionResult.Value;
@@ -112,7 +106,7 @@ namespace Tests
             Mock<ILogger<SkuController>> logger = new Mock<ILogger<SkuController>>();
             Mock<ISkuService> service = new Mock<ISkuService>();
             service.Setup(m => m.ListSkus()).Returns(twoSkus);
-            SkuController sut = new SkuController(service.Object, logger.Object);
+            SkuController sut = new SkuController(service.Object, commonFakes.Mapper);
 
             ActionResult<List<string>> actionResult = sut.Get();
             List<string> result = (List<string>)actionResult.Value;
@@ -128,7 +122,7 @@ namespace Tests
             Mock<ILogger<SkuController>> logger = new Mock<ILogger<SkuController>>();
             Mock<ISkuService> service = new Mock<ISkuService>();
             service.Setup(m => m.ListSkus()).Throws(exception);
-            SkuController sut = new SkuController(service.Object, logger.Object);
+            SkuController sut = new SkuController(service.Object, commonFakes.Mapper);
 
             try
             {
@@ -151,13 +145,13 @@ namespace Tests
         {
             Mock<ILogger<SkuController>> logger = new Mock<ILogger<SkuController>>();
             Mock<ISkuService> service = new Mock<ISkuService>();
-            service.Setup(m => m.GetTransactionsBySku(firstSku)).Returns(Task.FromResult(fullSku));
-            SkuController sut = new SkuController(service.Object, logger.Object);
+            service.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(Task.FromResult(fullSku));
+            SkuController sut = new SkuController(service.Object, commonFakes.Mapper);
 
-            ActionResult<Sku> actionResult = await sut.Get(firstSku);
+            ActionResult<Sku> actionResult = await sut.Get(CommonFakes.firstSku);
             Sku result = (Sku)actionResult.Value;
 
-            service.Verify(m => m.GetTransactionsBySku(firstSku), Times.Once);
+            service.Verify(m => m.GetTransactionsBySku(CommonFakes.firstSku), Times.Once);
         }
 
         [TestMethod]
@@ -165,10 +159,10 @@ namespace Tests
         {
             Mock<ILogger<SkuController>> logger = new Mock<ILogger<SkuController>>();
             Mock<ISkuService> service = new Mock<ISkuService>();
-            service.Setup(m => m.GetTransactionsBySku(firstSku)).Returns(Task.FromResult(fullSku));
-            SkuController sut = new SkuController(service.Object, logger.Object);
+            service.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(Task.FromResult(fullSku));
+            SkuController sut = new SkuController(service.Object, commonFakes.Mapper);
 
-            ActionResult<Sku> actionResult = await sut.Get(firstSku);
+            ActionResult<Sku> actionResult = await sut.Get(CommonFakes.firstSku);
             Sku result = (Sku)actionResult.Value;
 
             Assert.AreEqual(fullSku.Name, result.Name);
@@ -184,12 +178,12 @@ namespace Tests
         {
             Mock<ILogger<SkuController>> logger = new Mock<ILogger<SkuController>>();
             Mock<ISkuService> service = new Mock<ISkuService>();
-            service.Setup(m => m.GetTransactionsBySku(firstSku)).Throws(exception);
-            SkuController sut = new SkuController(service.Object, logger.Object);
+            service.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Throws(exception);
+            SkuController sut = new SkuController(service.Object, commonFakes.Mapper);
 
             try
             {
-                await sut.Get(firstSku);
+                await sut.Get(CommonFakes.firstSku);
 
                 Assert.IsTrue(false, "No exception thrown. Exception exception was expected.");
             }

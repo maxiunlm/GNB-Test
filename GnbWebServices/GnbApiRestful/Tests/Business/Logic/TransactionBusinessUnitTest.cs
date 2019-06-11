@@ -10,6 +10,7 @@ using Business.Model;
 using Business;
 using Data;
 using Moq;
+using Tests.Fakes;
 
 namespace Tests
 {
@@ -17,42 +18,35 @@ namespace Tests
     public class TransactionBusinessUnitTest
     {
         #region Fixture
-
-        private const decimal firstAmount = 1.359M;
-        private const decimal secondAmount = 0.736M;
-        private const string firstCurrency = "EUR";
-        private const string firstSku = "T2006";
-        private const string secondCurrency = "USD";
-        private const string secondSku = "M2007";
-        private const string excpetionMessage = "excpetionMessage";
+        private CommonFakes commonFakes = new CommonFakes();
 
         private static readonly List<Data.Model.Transaction> emptyTransactions = new List<Data.Model.Transaction>();
         private static readonly List<Data.Model.Transaction> oneTransaction = new List<Data.Model.Transaction>
         {
             new Data.Model.Transaction
             {
-                Sku = firstSku,
-                Currency = firstCurrency,
-                Amount = firstAmount
+                Sku = CommonFakes.firstSku,
+                Currency = CommonFakes.firstCurrency,
+                Amount = CommonFakes.firstAmount
             }
         };
         private static readonly List<Data.Model.Transaction> twoTransactions = new List<Data.Model.Transaction>
         {
             new Data.Model.Transaction
             {
-                Sku = firstSku,
-                Currency = firstCurrency,
-                Amount = firstAmount
+                Sku = CommonFakes.firstSku,
+                Currency = CommonFakes.firstCurrency,
+                Amount = CommonFakes.firstAmount
             },
             new Data.Model.Transaction
             {
-                Sku = secondSku,
-                Currency = secondCurrency,
-                Amount = secondAmount
+                Sku = CommonFakes.secondSku,
+                Currency = CommonFakes.secondCurrency,
+                Amount = CommonFakes.secondAmount
             }
         };
 
-        private static readonly Exception exception = new Exception(excpetionMessage);
+        private static readonly Exception exception = new Exception(CommonFakes.excpetionMessage);
 
         #endregion
 
@@ -64,7 +58,7 @@ namespace Tests
             Mock<ITransactionData> data = new Mock<ITransactionData>();
             data.Setup(m => m.ListTransactions()).Returns(Task.FromResult(oneTransaction));
             data.Setup(m => m.RefreshTransactions(oneTransaction));
-            ITransactionBusiness sut = new TransactionBusiness(data.Object);
+            ITransactionBusiness sut = new TransactionBusiness(data.Object, commonFakes.Mapper);
 
             List<Transaction> result = await sut.ListTransactions();
 
@@ -77,7 +71,7 @@ namespace Tests
             Mock<ITransactionData> data = new Mock<ITransactionData>();
             data.Setup(m => m.ListTransactions()).Returns(Task.FromResult(oneTransaction));
             data.Setup(m => m.RefreshTransactions(oneTransaction));
-            ITransactionBusiness sut = new TransactionBusiness(data.Object);
+            ITransactionBusiness sut = new TransactionBusiness(data.Object, commonFakes.Mapper);
 
             List<Transaction> result = await sut.ListTransactions();
 
@@ -90,7 +84,7 @@ namespace Tests
             Mock<ITransactionData> data = new Mock<ITransactionData>();
             data.Setup(m => m.ListTransactions()).Returns(Task.FromResult(oneTransaction));
             data.Setup(m => m.RefreshTransactions(oneTransaction));
-            ITransactionBusiness sut = new TransactionBusiness(data.Object);
+            ITransactionBusiness sut = new TransactionBusiness(data.Object, commonFakes.Mapper);
 
             List<Transaction> result = await sut.ListTransactions();
 
@@ -103,7 +97,7 @@ namespace Tests
             Mock<ITransactionData> data = new Mock<ITransactionData>();
             data.Setup(m => m.ListTransactions()).Returns(Task.FromResult(emptyTransactions));
             data.Setup(m => m.RefreshTransactions(emptyTransactions));
-            ITransactionBusiness sut = new TransactionBusiness(data.Object);
+            ITransactionBusiness sut = new TransactionBusiness(data.Object, commonFakes.Mapper);
 
             List<Transaction> result = await sut.ListTransactions();
 
@@ -116,7 +110,7 @@ namespace Tests
             Mock<ITransactionData> data = new Mock<ITransactionData>();
             data.Setup(m => m.ListTransactions()).Returns(Task.FromResult(oneTransaction));
             data.Setup(m => m.RefreshTransactions(oneTransaction));
-            ITransactionBusiness sut = new TransactionBusiness(data.Object);
+            ITransactionBusiness sut = new TransactionBusiness(data.Object, commonFakes.Mapper);
 
             List<Transaction> result = await sut.ListTransactions();
 
@@ -129,7 +123,7 @@ namespace Tests
             Mock<ITransactionData> data = new Mock<ITransactionData>();
             data.Setup(m => m.ListTransactions()).Returns(Task.FromResult(twoTransactions));
             data.Setup(m => m.RefreshTransactions(twoTransactions));
-            ITransactionBusiness sut = new TransactionBusiness(data.Object);
+            ITransactionBusiness sut = new TransactionBusiness(data.Object, commonFakes.Mapper);
 
             List<Transaction> result = await sut.ListTransactions();
 
@@ -141,7 +135,7 @@ namespace Tests
         {
             Mock<ITransactionData> data = new Mock<ITransactionData>();
             data.Setup(m => m.ListTransactions()).Throws(exception);
-            ITransactionBusiness sut = new TransactionBusiness(data.Object);
+            ITransactionBusiness sut = new TransactionBusiness(data.Object, commonFakes.Mapper);
 
             try
             {

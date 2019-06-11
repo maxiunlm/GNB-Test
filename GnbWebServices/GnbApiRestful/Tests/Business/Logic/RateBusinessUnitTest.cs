@@ -10,72 +10,60 @@ using Business.Model;
 using Business;
 using Data;
 using Moq;
+using Tests.Fakes;
 
 namespace Tests
 {
     [TestClass]
     public class RateBusinessUnitTest
     {
+
         #region Fixture
-
-        private const decimal firstRate = 1.359M;
-        private const decimal secondRate = 0.736M;
-        private const decimal thirdRate = 0.732M;
-        private const decimal fourthRate = 1.366M;
-        private const string firstFrom = "EUR";
-        private const string firstTo = "USD";
-        private const string secondFrom = "USD";
-        private const string secondTo = "EUR";
-        private const string thirdFrom = "CAD";
-        private const string thirdTo = "EUR";
-        private const string fourthFrom = "EUR";
-        private const string fourthTo = "CAD";
-        private const string excpetionMessage = "excpetionMessage";
-
+        private CommonFakes commonFakes = new CommonFakes();
         private static readonly List<Data.Model.CurrencyConvertion> emptyCurrencyConvertions = new List<Data.Model.CurrencyConvertion>();
         private static readonly List<Data.Model.CurrencyConvertion> twoCurrencyConvertions = new List<Data.Model.CurrencyConvertion>
         {
             new Data.Model.CurrencyConvertion
             {
-                From = firstFrom,
-                To = firstTo,
-                Rate = firstRate
+                From = CommonFakes.firstFrom,
+                To = CommonFakes.firstTo,
+                Rate = CommonFakes.firstRate
             },
             new Data.Model.CurrencyConvertion
             {
-                From = secondFrom,
-                To = secondTo,
-                Rate = secondRate
+                From = CommonFakes.secondFrom,
+                To = CommonFakes.secondTo,
+                Rate = CommonFakes.secondRate
             }
         };
         private static readonly List<Data.Model.CurrencyConvertion> fourCurrencyConvertions = new List<Data.Model.CurrencyConvertion>
         {
             new Data.Model.CurrencyConvertion
             {
-                From = firstFrom,
-                To = firstTo,
-                Rate = firstRate
+                From = CommonFakes.firstFrom,
+                To = CommonFakes.firstTo,
+                Rate = CommonFakes.firstRate
             },
             new Data.Model.CurrencyConvertion
             {
-                From = secondFrom,
-                To = secondTo,
-                Rate = secondRate
+                From = CommonFakes.secondFrom,
+                To = CommonFakes.secondTo,
+                Rate = CommonFakes.secondRate
             },
             new Data.Model.CurrencyConvertion
             {
-                From = thirdFrom,
-                To = thirdTo,
-                Rate = thirdRate
+                From = CommonFakes.thirdFrom,
+                To = CommonFakes.thirdTo,
+                Rate = CommonFakes.thirdRate
             },
             new Data.Model.CurrencyConvertion
             {
-                From = fourthFrom,
-                To = fourthTo,
-                Rate = fourthRate
+                From = CommonFakes.fourthFrom,
+                To = CommonFakes.fourthTo,
+                Rate = CommonFakes.fourthRate
             }
         };
-        private static readonly Exception exception = new Exception(excpetionMessage);
+        private static readonly Exception exception = new Exception(CommonFakes.excpetionMessage);
 
         #endregion
 
@@ -87,7 +75,7 @@ namespace Tests
             Mock<IRateData> data = new Mock<IRateData>();
             data.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             data.Setup(m => m.InsertOrUpdateRates(It.IsAny<List<Data.Model.CurrencyConvertion>>()));
-            IRateBusiness sut = new RateBusiness(data.Object);
+            IRateBusiness sut = new RateBusiness(data.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -100,7 +88,7 @@ namespace Tests
             Mock<IRateData> data = new Mock<IRateData>();
             data.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             data.Setup(m => m.InsertOrUpdateRates(It.IsAny<List<Data.Model.CurrencyConvertion>>()));
-            IRateBusiness sut = new RateBusiness(data.Object);
+            IRateBusiness sut = new RateBusiness(data.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -113,7 +101,7 @@ namespace Tests
             Mock<IRateData> data = new Mock<IRateData>();
             data.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             data.Setup(m => m.InsertOrUpdateRates(It.IsAny<List<Data.Model.CurrencyConvertion>>()));
-            IRateBusiness sut = new RateBusiness(data.Object);
+            IRateBusiness sut = new RateBusiness(data.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -126,7 +114,7 @@ namespace Tests
             Mock<IRateData> data = new Mock<IRateData>();
             data.Setup(m => m.ListRates()).Returns(Task.FromResult(emptyCurrencyConvertions));
             data.Setup(m => m.InsertOrUpdateRates(It.IsAny<List<Data.Model.CurrencyConvertion>>()));
-            IRateBusiness sut = new RateBusiness(data.Object);
+            IRateBusiness sut = new RateBusiness(data.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -138,7 +126,7 @@ namespace Tests
         {
             Mock<IRateData> data = new Mock<IRateData>();
             data.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
-            IRateBusiness sut = new RateBusiness(data.Object);
+            IRateBusiness sut = new RateBusiness(data.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -151,7 +139,7 @@ namespace Tests
             Mock<IRateData> data = new Mock<IRateData>();
             data.Setup(m => m.ListRates()).Returns(Task.FromResult(fourCurrencyConvertions));
             data.Setup(m => m.InsertOrUpdateRates(It.IsAny<List<Data.Model.CurrencyConvertion>>()));
-            IRateBusiness sut = new RateBusiness(data.Object);
+            IRateBusiness sut = new RateBusiness(data.Object, commonFakes.Mapper);
 
             List<CurrencyConvertion> result = await sut.ListRates();
 
@@ -164,7 +152,7 @@ namespace Tests
             Mock<IRateData> data = new Mock<IRateData>();
             data.Setup(m => m.ListRates()).Throws(exception);
             data.Setup(m => m.InsertOrUpdateRates(It.IsAny<List<Data.Model.CurrencyConvertion>>()));
-            IRateBusiness sut = new RateBusiness(data.Object);
+            IRateBusiness sut = new RateBusiness(data.Object, commonFakes.Mapper);
 
             try
             {

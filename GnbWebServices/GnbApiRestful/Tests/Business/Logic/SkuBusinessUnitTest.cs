@@ -11,6 +11,7 @@ using Business;
 using Data;
 using System;
 using Moq;
+using Tests.Fakes;
 
 namespace Tests
 {
@@ -18,31 +19,15 @@ namespace Tests
     public class SkuBusinessUnitTest
     {
         #region Fixture
-
-        private const int digits = 2;
-        private const decimal firstAmount = 14.99M;
-        private const decimal secondAmount = 34.57M;
-        private const decimal firstRate = 1.359M;
-        private const decimal secondRate = 0.736M;
-        private const string firstFrom = "EUR";
-        private const string firstTo = "USD";
-        private const string secondFrom = "USD";
-        private const string secondTo = "EUR";
-        private const string firstCurrency = "EUR";
-        private const string secondCurrency = "USD";
-        private const string nonSku = "";
-        private const string firstSku = "E7719";
-        private const string secondSku = "E7719";
-        private const string excpetionMessage = "excpetionMessage";
-
+        private CommonFakes commonFakes = new CommonFakes();
         private static readonly List<string> emptySkus = new List<string>();
-        private static readonly List<string> oneSku = new List<string> { firstSku };
-        private static readonly List<string> twoSkus = new List<string> { firstSku, secondSku };
+        private static readonly List<string> oneSku = new List<string> { CommonFakes.firstSku };
+        private static readonly List<string> twoSkus = new List<string> { CommonFakes.firstSku, CommonFakes.secondSku };
         private static readonly Data.Model.Transaction firstTransaction = new Data.Model.Transaction
         {
-            Sku = firstSku,
-            Currency = firstCurrency,
-            Amount = firstAmount
+            Sku = CommonFakes.firstSku,
+            Currency = CommonFakes.firstCurrency,
+            Amount = CommonFakes.firstAmount
         };
         private static readonly List<Data.Model.Transaction> emptyTransactions = new List<Data.Model.Transaction>();
         private static readonly List<Data.Model.Transaction> oneTransaction = new List<Data.Model.Transaction>
@@ -53,30 +38,30 @@ namespace Tests
         {
             new Data.Model.Transaction
             {
-                Sku = firstSku,
-                Currency = firstCurrency,
-                Amount = firstAmount
+                Sku = CommonFakes.firstSku,
+                Currency = CommonFakes.firstCurrency,
+                Amount = CommonFakes.firstAmount
             },
             new Data.Model.Transaction
             {
-                Sku = secondSku,
-                Currency = secondCurrency,
-                Amount = secondAmount
+                Sku = CommonFakes.secondSku,
+                Currency = CommonFakes.secondCurrency,
+                Amount = CommonFakes.secondAmount
             }
         };
         private static readonly List<Data.Model.Transaction> twoTransactionForBanks = new List<Data.Model.Transaction>
         {
             new Data.Model.Transaction
             {
-                Sku = firstSku,
-                Currency = firstCurrency,
-                Amount = firstAmount
+                Sku = CommonFakes.firstSku,
+                Currency = CommonFakes.firstCurrency,
+                Amount = CommonFakes.firstAmount
             },
             new Data.Model.Transaction
             {
-                Sku = secondSku,
-                Currency = firstCurrency,
-                Amount = secondAmount
+                Sku = CommonFakes.secondSku,
+                Currency = CommonFakes.firstCurrency,
+                Amount = CommonFakes.secondAmount
             }
         };
         private static readonly List<CurrencyConvertion> emptyCurrencyConvertions = new List<CurrencyConvertion>();
@@ -88,24 +73,24 @@ namespace Tests
         {
             new CurrencyConvertion
             {
-                From = firstFrom,
-                To = firstTo,
-                Rate = firstRate
+                From = CommonFakes.firstFrom,
+                To = CommonFakes.firstTo,
+                Rate = CommonFakes.firstRate
             },
             new CurrencyConvertion
             {
-                From = secondFrom,
-                To = secondTo,
-                Rate = secondRate
+                From = CommonFakes.secondFrom,
+                To = CommonFakes.secondTo,
+                Rate = CommonFakes.secondRate
             }
         };
         private static readonly CurrencyConvertion firstCurrencyConvertion = new CurrencyConvertion
         {
-            From = firstFrom,
-            To = firstTo,
-            Rate = firstRate
+            From = CommonFakes.firstFrom,
+            To = CommonFakes.firstTo,
+            Rate = CommonFakes.firstRate
         };
-        private static readonly Exception exception = new Exception(excpetionMessage);
+        private static readonly Exception exception = new Exception(CommonFakes.excpetionMessage);
 
         #endregion
 
@@ -117,7 +102,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(oneSku);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -130,7 +115,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(oneSku);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -143,7 +128,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(emptySkus);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -156,7 +141,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(oneSku);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -170,7 +155,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(twoSkus);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -185,7 +170,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Throws(exception);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
             try
             {
@@ -209,12 +194,12 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             rateBusiness.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             Mock<ISkuData> data = new Mock<ISkuData>();
-            data.Setup(m => m.GetTransactionsBySku(firstSku)).Returns(Task.FromResult(oneTransaction));
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            data.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(oneTransaction);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
-            Sku result = await sut.GetTransactionsBySku(firstSku);
+            Sku result = await sut.GetTransactionsBySku(CommonFakes.firstSku);
 
-            data.Verify(m => m.GetTransactionsBySku(firstSku), Times.Once);
+            data.Verify(m => m.GetTransactionsBySku(CommonFakes.firstSku), Times.Once);
         }
 
         [TestMethod]
@@ -223,12 +208,12 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             rateBusiness.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             Mock<ISkuData> data = new Mock<ISkuData>();
-            data.Setup(m => m.GetTransactionsBySku(firstSku)).Returns(Task.FromResult(oneTransaction));
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            data.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(oneTransaction);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
-            Sku result = await sut.GetTransactionsBySku(firstSku);
+            Sku result = await sut.GetTransactionsBySku(CommonFakes.firstSku);
 
-            Assert.AreEqual(firstSku, result.Name);
+            Assert.AreEqual(CommonFakes.firstSku, result.Name);
             Assert.AreEqual(oneTransaction.Count, result.Transactions.Count);
             Assert.AreEqual(oneTransaction.First().Sku, result.Transactions.First().Sku);
             Assert.AreEqual(oneTransaction.First().Amount, result.Transactions.First().Amount);
@@ -241,14 +226,14 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             rateBusiness.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             Mock<ISkuData> data = new Mock<ISkuData>();
-            data.Setup(m => m.GetTransactionsBySku(firstSku)).Returns(Task.FromResult(twoTransactionForBanks));
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            data.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(twoTransactionForBanks);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
-            Sku result = await sut.GetTransactionsBySku(firstSku);
+            Sku result = await sut.GetTransactionsBySku(CommonFakes.firstSku);
             decimal total = twoTransactionForBanks.Sum(o => RoundBank(o.Amount));
             total = RoundBank(total);
 
-            Assert.AreEqual(firstSku, result.Name);
+            Assert.AreEqual(CommonFakes.firstSku, result.Name);
             Assert.AreEqual(total, result.Total);
         }
 
@@ -258,12 +243,12 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             rateBusiness.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             Mock<ISkuData> data = new Mock<ISkuData>();
-            data.Setup(m => m.GetTransactionsBySku(firstSku)).Throws(exception);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object);
+            data.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Throws(exception);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
 
             try
             {
-                await sut.GetTransactionsBySku(firstSku);
+                await sut.GetTransactionsBySku(CommonFakes.firstSku);
 
                 Assert.IsTrue(false, "No exception thrown. Exception exception was expected.");
             }
@@ -277,7 +262,7 @@ namespace Tests
 
         private decimal RoundBank(decimal amount)
         {
-            return Math.Round(amount, digits, MidpointRounding.AwayFromZero);
+            return Math.Round(amount, CommonFakes.digits, MidpointRounding.AwayFromZero);
         }
     }
 }
