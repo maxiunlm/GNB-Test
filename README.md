@@ -93,7 +93,7 @@ Esta orientada a objetos y se encuentra dividida en Capas:
  2. Client: Son los clientes que se encargan de la comunicación con el Servicio (la WebApi).
 
 ### Ejecutar el proyecto
-En la carpeta del Proyecto Cliente, ejecutar el comando:
+En la carpeta del Proyecto Cliente (./GnbWebClient/gnbwebclient/), ejecutar el comando:
  
 ```bash
 yarn start
@@ -104,7 +104,7 @@ npm start
 ```
 
 ### Ejecutar Pruebas (Tests)
-En la carpeta del Proyecto Cliente, ejecutar el comando:
+En la carpeta del Proyecto Cliente (./GnbWebClient/gnbwebclient/), ejecutar el comando:
 
 ```bash
 yarn test
@@ -138,7 +138,7 @@ cd gnbwebclient
  
 ## Creación del Servicio (WebApi)
 
-A modo informativo, estos son los pasos que seguí para crear el Servicio. Usted no debería volverlos a ejecutar.
+A modo informativo, estos son los pasos que seguí para crear el Servicio. Usted no debería volverlos a ejecutar, simpre desde la carpeta './GnbWebServices/'.
 
 #### Crear proyectos
 ```bash
