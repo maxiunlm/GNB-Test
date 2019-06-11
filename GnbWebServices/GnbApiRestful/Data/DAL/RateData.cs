@@ -20,13 +20,6 @@ namespace Data
         private readonly IHttpClientFactory httpClientFactory;
         private readonly HttpClient client;
 
-        private const string jsonRates = @"[
- { 'from': 'EUR', 'to': 'USD', 'rate': '1.359' },
- { 'from': 'CAD', 'to': 'EUR', 'rate': '0.732' },
- { 'from': 'USD', 'to': 'EUR', 'rate': '0.736' },
- { 'from': 'EUR', 'to': 'CAD', 'rate': '1.366' }
-]";
-
         public RateData(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             ratesUrl = configuration["RatesUrl"];
@@ -42,7 +35,7 @@ namespace Data
 
             try
             {
-                // string jsonRates = await client.GetStringAsync(ratesUrl);
+                string jsonRates = await client.GetStringAsync(ratesUrl);
                 rates = JsonConvert.DeserializeObject<List<CurrencyConvertion>>(jsonRates);
             }
             catch (Exception)

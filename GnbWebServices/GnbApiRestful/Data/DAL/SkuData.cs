@@ -23,7 +23,7 @@ namespace Data
             transactionsCollectionName = configuration["TransactionsCollectionName"];
         }
 
-        public async Task<List<Transaction>> GetTransactionsBySku(string sku)
+        public List<Transaction> GetTransactionsBySku(string sku)
         {
             MongoDal mongoDal = new MongoDal(transactionsCollectionName, configuration);
             List<Transaction> transactions = mongoDal.GetWhere<Transaction>(o => o.Sku == sku).ToList();

@@ -7,7 +7,7 @@ namespace Data
 {
     public interface ISkuData
     {
-        Task<List<Transaction>> GetTransactionsBySku(string sku);
+        List<Transaction> GetTransactionsBySku(string sku);
         List<string> ListSkus();
     }
 }

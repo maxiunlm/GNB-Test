@@ -35,7 +35,7 @@ namespace Business
         public async Task<Sku> GetTransactionsBySku(string sku)
         {
             List<CurrencyConvertion> Rates = await rateBusiness.ListRates();
-            List<Data.Model.Transaction> originData = await data.GetTransactionsBySku(sku);
+            List<Data.Model.Transaction> originData = data.GetTransactionsBySku(sku);
             List<Transaction> transactions = mapper.Map<List<Transaction>>(originData);
             PassTransactionsToDefualtCurrency(Rates, transactions);
             transactions = transactions.OrderBy(o => o.Currency).ToList();
