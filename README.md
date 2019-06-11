@@ -93,6 +93,7 @@ Esta orientada a objetos y se encuentra dividida en Capas:
  2. Client: Son los clientes que se encargan de la comunicación con el Servicio (la WebApi).
 
 ### Ejecutar el proyecto
+En la carpeta del Proyecto Cliente, ejecutar el comando:
  
 ```bash
 yarn start
@@ -100,6 +101,17 @@ yarn start
 #### ó
 ```bash
 npm start
+```
+
+### Ejecutar Pruebas (Tests)
+En la carpeta del Proyecto Cliente, ejecutar el comando:
+
+```bash
+yarn test
+```
+#### ó
+```bash
+npm test
 ```
 
 ### Abrir en el Navegador Web
@@ -122,7 +134,8 @@ cd gnbwebclient
 
  * yarn add react-select
  * yarn add bootstrap
-
+ * yarn add dotenv
+ 
 ## Creación del Servicio (WebApi)
 
 A modo informativo, estos son los pasos que seguí para crear el Servicio. Usted no debería volverlos a ejecutar.
