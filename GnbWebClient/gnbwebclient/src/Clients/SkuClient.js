@@ -1,8 +1,5 @@
 import ClientBase from './Base/ClientBase';
 
-const summaryWebapiEndpoint = 'http://localhost:5000/api/Sku/summary/';
-const skusWebapiEndpoint = 'http://localhost:5000/api/Sku';
-
 export default class SkuClient extends ClientBase {
     constructor() {
         super();
@@ -16,7 +13,7 @@ export default class SkuClient extends ClientBase {
     }
 
     async listSkus() {
-        let skusInfo = await this.fetch(skusWebapiEndpoint);
+        let skusInfo = await this.fetch(process.env.REACT_APP_skusWebapiEndpoint);
 
         return skusInfo;
     }
@@ -29,6 +26,6 @@ export default class SkuClient extends ClientBase {
     }
 
     getSummaryUri(sku) {
-        return summaryWebapiEndpoint + sku;
+        return process.env.REACT_APP_summaryWebapiEndpoint + sku;
     }
 }

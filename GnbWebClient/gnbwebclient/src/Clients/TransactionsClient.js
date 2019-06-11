@@ -1,7 +1,5 @@
 import ClientBase from './Base/ClientBase';
 
-const transactionsWebapiEndpoint = 'http://localhost:5000/api/Transaction';
-
 export default class TransactionsClient extends ClientBase {
     constructor() {
         super();
@@ -13,7 +11,7 @@ export default class TransactionsClient extends ClientBase {
     }
 
     async listTransactions() {
-        let transactions = await this.fetch(transactionsWebapiEndpoint);
+        let transactions = await this.fetch(process.env.REACT_APP_transactionsWebapiEndpoint);
 
         return transactions;
     }

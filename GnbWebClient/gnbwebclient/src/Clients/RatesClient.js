@@ -1,7 +1,5 @@
 import ClientBase from './Base/ClientBase';
 
-const ratesWebapiEndpoint = 'http://localhost:5000/api/Rate';
-
 export default class RatesClient extends ClientBase {
     constructor() {
         super();
@@ -13,7 +11,7 @@ export default class RatesClient extends ClientBase {
     }
 
     async listRates() {
-        let rates = await this.fetch(ratesWebapiEndpoint);
+        let rates = await this.fetch(process.env.REACT_APP_ratesWebapiEndpoint);
 
         return rates;
     }
