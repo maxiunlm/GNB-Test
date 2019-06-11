@@ -75,13 +75,17 @@ Está orientada a objetos y se encuentra dividida en Capas:
   ii. Administrar la Conexión y el CRUD (ABM) contra el MongoDb.
 
 ### Ejecutar Pruebas (Tests)
+En la carpeta del Proyecto Service (./GnbWebServices/GnbApiRestful/), ejecutar el comando:
+
 ```bash
-dotnet test ./GnbApiRestful/Tests/Tests.csproj
+dotnet test ./Tests/Tests.csproj
 ```
  
 ### Ejecutar Porjecto
+En la carpeta del Proyecto Service (./GnbWebServices/GnbApiRestful/), ejecutar el comando:
+
 ```bash
-dotnet run --project ./GnbApiRestful/Webapi/Webapi.csproj
+dotnet run --project ./Webapi/Webapi.csproj
 ```
 
 ### Abrir en el Navegador Web
@@ -91,14 +95,15 @@ dotnet run --project ./GnbApiRestful/Webapi/Webapi.csproj
   * SKU: http://localhost:5000/api/Sku/summary/skuId (skuId: puede salir de uno de los valores de 'Sku List')
   
 #### Agregar packages
-Solo en el caso de que no tenga instalado los packages necesarios, ejecute los siguientes comandos para instalar/restaurar los Packages de la aplicación:
+Solo en el caso de que no tenga instalado los packages necesarios, ejecute los siguientes comandos para instalar/restaurar los Packages de la aplicación.
+En la carpeta del Proyecto Service (./GnbWebServices/GnbApiRestful/), ejecutar los comandos:
 
 ```bash
-dotnet restore ./GnbApiRestful/Data/Data.csproj
-dotnet restore ./GnbApiRestful/Business/Business.csproj
-dotnet restore ./GnbApiRestful/Service/Service.csproj
-dotnet restore ./GnbApiRestful/Webapi/Webapi.csproj
-dotnet restore ./GnbApiRestful/Tests/Tests.csproj 
+dotnet restore ./Data/Data.csproj
+dotnet restore ./Business/Business.csproj
+dotnet restore ./Service/Service.csproj
+dotnet restore ./Webapi/Webapi.csproj
+dotnet restore ./Tests/Tests.csproj 
 ```
 
 ----------------------------------------------------------------------------------------------------------
