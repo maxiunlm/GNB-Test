@@ -8,6 +8,7 @@ namespace Tests.Fakes
 {
     public class CommonFakes
     {
+        public const int twice = 2;
         public const decimal firstRate = 1.359M;
         public const decimal secondRate = 0.736M;
         public const decimal thirdRate = 0.732M;
@@ -60,11 +61,23 @@ namespace Tests.Fakes
             this.Mapper = automappingConfiguration.CreateMapper();
 
             Mock<IConfiguration> configurationMock = new Mock<IConfiguration>();
+            configurationMock.SetupGet(o => o["DefualtCurrency"]).Returns(defaultCurrency);
+            configurationMock.SetupGet(o => o["MongoDbServerHost"]).Returns("mongodb://localhost:27017");
+            configurationMock.SetupGet(o => o["DefaultDatabaseName"]).Returns("GnbDataBase");
+            configurationMock.SetupGet(o => o["RatesUrl"]).Returns("http://quiet-stone-2094.herokuapp.com/rates.json");
+            configurationMock.SetupGet(o => o["RatesCollectionName"]).Returns("Rates");
+            configurationMock.SetupGet(o => o["TransactionsUrl"]).Returns("http://quiet-stone-2094.herokuapp.com/transactions.json");
+            configurationMock.SetupGet(o => o["TransactionsCollectionName"]).Returns("Transactions");
             Configaration = configurationMock.Object;
         }
 
         public IMapper Mapper { get; private set; }
         public IConfiguration Configaration { get; private set; }
+
+        public decimal RoundBank(decimal amount)
+        {
+            return Math.Round(amount, CommonFakes.digits, MidpointRounding.AwayFromZero);
+        }
 
     }
 }

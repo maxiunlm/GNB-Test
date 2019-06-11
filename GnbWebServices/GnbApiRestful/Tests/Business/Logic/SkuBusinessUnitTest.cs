@@ -19,7 +19,9 @@ namespace Tests
     public class SkuBusinessUnitTest
     {
         #region Fixture
+
         private CommonFakes commonFakes = new CommonFakes();
+        private static readonly IBankCalculus bankCalculus = new BankCalculus();
         private static readonly List<string> emptySkus = new List<string>();
         private static readonly List<string> oneSku = new List<string> { CommonFakes.firstSku };
         private static readonly List<string> twoSkus = new List<string> { CommonFakes.firstSku, CommonFakes.secondSku };
@@ -34,17 +36,11 @@ namespace Tests
         {
             firstTransaction
         };
-        private static readonly List<Data.Model.Transaction> twoTransactions = new List<Data.Model.Transaction>
+        private static readonly List<Data.Model.Transaction> oneTransactionForBank = new List<Data.Model.Transaction>
         {
             new Data.Model.Transaction
             {
                 Sku = CommonFakes.firstSku,
-                Currency = CommonFakes.firstCurrency,
-                Amount = CommonFakes.firstAmount
-            },
-            new Data.Model.Transaction
-            {
-                Sku = CommonFakes.secondSku,
                 Currency = CommonFakes.secondCurrency,
                 Amount = CommonFakes.secondAmount
             }
@@ -102,7 +98,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(oneSku);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -110,12 +106,12 @@ namespace Tests
         }
 
         [TestMethod]
-        public void ListSkus_WithoutParameters_InvokesListSkusMethodFromServicesLayer()
+        public void ListSkus_WithoutParameters_InvokesListSkusMethodFromBusinessLayer()
         {
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(oneSku);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -128,7 +124,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(emptySkus);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -141,7 +137,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(oneSku);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -155,7 +151,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Returns(twoSkus);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             List<string> result = sut.ListSkus();
 
@@ -170,7 +166,7 @@ namespace Tests
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(o => o.ListSkus()).Throws(exception);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             try
             {
@@ -189,17 +185,33 @@ namespace Tests
         #region GetTransactionsBySku
 
         [TestMethod]
-        public async Task GetTransactionsBySku_WithAnSkuId_InvokesGetTransactionsBySkuMethodFromServicesLayer()
+        public async Task GetTransactionsBySku_WithAnSkuId_InvokesGetTransactionsBySkuMethodFromBusniessLayer()
         {
             Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
             rateBusiness.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(oneTransaction);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             Sku result = await sut.GetTransactionsBySku(CommonFakes.firstSku);
 
             data.Verify(m => m.GetTransactionsBySku(CommonFakes.firstSku), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task GetTransactionsBySku_WithAnSkuId_InvokesRoundBankMethodBankCalculusObject()
+        {
+            Mock<IRateBusiness> rateBusiness = new Mock<IRateBusiness>();
+            rateBusiness.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
+            Mock<IBankCalculus> bankCalculus = new Mock<IBankCalculus>();
+            bankCalculus.Setup(m => m.RoundBank(It.IsAny<decimal>())).Returns(CommonFakes.firstAmount);
+            Mock<ISkuData> data = new Mock<ISkuData>();
+            data.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(oneTransactionForBank);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus.Object, commonFakes.Configaration, commonFakes.Mapper);
+
+            Sku result = await sut.GetTransactionsBySku(CommonFakes.firstSku);
+
+            bankCalculus.Verify(m => m.RoundBank(It.IsAny<decimal>()), Times.Exactly(CommonFakes.twice));
         }
 
         [TestMethod]
@@ -209,7 +221,7 @@ namespace Tests
             rateBusiness.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(oneTransaction);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             Sku result = await sut.GetTransactionsBySku(CommonFakes.firstSku);
 
@@ -227,11 +239,11 @@ namespace Tests
             rateBusiness.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Returns(twoTransactionForBanks);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             Sku result = await sut.GetTransactionsBySku(CommonFakes.firstSku);
-            decimal total = twoTransactionForBanks.Sum(o => RoundBank(o.Amount));
-            total = RoundBank(total);
+            decimal total = twoTransactionForBanks.Sum(o => commonFakes.RoundBank(o.Amount));
+            total = commonFakes.RoundBank(total);
 
             Assert.AreEqual(CommonFakes.firstSku, result.Name);
             Assert.AreEqual(total, result.Total);
@@ -244,7 +256,7 @@ namespace Tests
             rateBusiness.Setup(m => m.ListRates()).Returns(Task.FromResult(twoCurrencyConvertions));
             Mock<ISkuData> data = new Mock<ISkuData>();
             data.Setup(m => m.GetTransactionsBySku(CommonFakes.firstSku)).Throws(exception);
-            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, commonFakes.Configaration, commonFakes.Mapper);
+            ISkuBusiness sut = new SkuBusiness(rateBusiness.Object, data.Object, bankCalculus, commonFakes.Configaration, commonFakes.Mapper);
 
             try
             {
@@ -259,10 +271,5 @@ namespace Tests
         }
 
         #endregion
-
-        private decimal RoundBank(decimal amount)
-        {
-            return Math.Round(amount, CommonFakes.digits, MidpointRounding.AwayFromZero);
-        }
     }
 }

@@ -11,16 +11,22 @@ namespace Business
 {
     public class SkuBusiness : ISkuBusiness
     {
-        private const int digits = 2;
         private readonly string defualtCurrency;
         private readonly ISkuData data;
+        private readonly IBankCalculus bankCalculus;
         private readonly IRateBusiness rateBusiness;
         private readonly IMapper mapper;
 
-        public SkuBusiness(IRateBusiness rateBusiness, ISkuData data, IConfiguration configuration, IMapper mapper)
+        public SkuBusiness(
+            IRateBusiness rateBusiness,
+            ISkuData data,
+            IBankCalculus bankCalculus,
+            IConfiguration configuration,
+            IMapper mapper)
         {
             this.data = data;
             this.rateBusiness = rateBusiness;
+            this.bankCalculus = bankCalculus;
             defualtCurrency = configuration["DefualtCurrency"];
             this.mapper = mapper;
         }
@@ -40,7 +46,7 @@ namespace Business
             PassTransactionsToDefualtCurrency(Rates, transactions);
             transactions = transactions.OrderBy(o => o.Currency).ToList();
             decimal total = transactions.Sum(o => o.Amount);
-            total = RoundBank(total);
+            total = bankCalculus.RoundBank(total);
 
             Sku skuModel = new Sku
             {
@@ -66,15 +72,10 @@ namespace Business
                     {
                         t.Currency = defualtCurrency;
                         t.Amount *= Rate.Rate;
-                        t.Amount = RoundBank(t.Amount);
+                        t.Amount = bankCalculus.RoundBank(t.Amount);
                     }
                 }
             });
-        }
-
-        private decimal RoundBank(decimal amount)
-        {
-            return Math.Round(amount, digits, MidpointRounding.AwayFromZero);
         }
     }
 }
