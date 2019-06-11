@@ -73,15 +73,15 @@ Está orientada a objetos y se encuentra dividida en Capas:
     * http://quiet-stone-2094.herokuapp.com/rates.json
     * http://quiet-stone-2094.herokuapp.com/transactions.json
   ii. Administrar la Conexión y el CRUD (ABM) contra el MongoDb.
- 
-### Ejecutar Porjecto
-```bash
-dotnet run --project ./GnbApiRestful/Webapi/Webapi.csproj
-```
 
 ### Ejecutar Pruebas (Tests)
 ```bash
 dotnet test ./GnbApiRestful/Tests/Tests.csproj
+```
+ 
+### Ejecutar Porjecto
+```bash
+dotnet run --project ./GnbApiRestful/Webapi/Webapi.csproj
 ```
 
 ### Abrir en el Navegador Web
@@ -99,17 +99,6 @@ Esta orientada a objetos y se encuentra dividida en Capas:
  1. Presenter: Son los componentes React.js de la UI.
  2. Client: Son los clientes que se encargan de la comunicación con el Servicio (la WebApi).
 
-### Ejecutar el proyecto
-En la carpeta del Proyecto Cliente (./GnbWebClient/gnbwebclient/), ejecutar el comando:
- 
-```bash
-yarn start
-```
-#### ó
-```bash
-npm start
-```
-
 ### Ejecutar Pruebas (Tests)
 En la carpeta del Proyecto Cliente (./GnbWebClient/gnbwebclient/), ejecutar el comando:
 
@@ -121,103 +110,19 @@ yarn test
 npm test
 ```
 
+### Ejecutar el proyecto
+En la carpeta del Proyecto Cliente (./GnbWebClient/gnbwebclient/), ejecutar el comando:
+ 
+```bash
+yarn start
+```
+#### ó
+```bash
+npm start
+```
+
 ### Abrir en el Navegador Web
 http://localhost:3000/
-
-----------------------------------------------------------------------------------------------------------
-
-# Creación de los proyectos
-
-## Creación del Cliente Web
-
-A modo informativo, estos son los pasos que seguí para cear el Cliente Web. Usted no debería volverlos a ejecutar.
-
-```bash
-npx create-react-app gnbwebclient
-cd gnbwebclient
-```
-
-### Agregar packages
-
- * yarn add react-select
- * yarn add bootstrap
- * yarn add dotenv
- 
-## Creación del Servicio (WebApi)
-
-A modo informativo, estos son los pasos que seguí para crear el Servicio. Usted no debería volverlos a ejecutar, simpre desde la carpeta './GnbWebServices/'.
-
-#### Crear proyectos
-```bash
-dotnet new webapi -o ./GnbApiRestful/Webapi
-dotnet new classlib -o ./GnbApiRestful/Service
-dotnet new classlib -o ./GnbApiRestful/Business
-dotnet new classlib -o ./GnbApiRestful/Data
-dotnet new mstest -o ./GnbApiRestful/Tests
-```
-
-#### Creación de la Solution
-```bash
-dotnet new sln -o ./GnbApiRestful
-dotnet sln ./GnbApiRestful/GnbApiRestful.sln add ./GnbApiRestful/Webapi/Webapi.csproj ./GnbApiRestful/Service/Service.csproj ./GnbApiRestful/Business/Business.csproj ./GnbApiRestful/Data/Data.csproj ./GnbApiRestful/Tests/Tests.csproj
-```
-
-#### Agregar referencias entre proyectos
-```bash
-dotnet add ./GnbApiRestful/Webapi/Webapi.csproj reference ./GnbApiRestful/Service/Service.csproj
-dotnet add ./GnbApiRestful/Service/Service.csproj reference ./GnbApiRestful/Business/Business.csproj
-dotnet add ./GnbApiRestful/Business/Business.csproj reference ./GnbApiRestful/Data/Data.csproj
-dotnet add ./GnbApiRestful/Tests/Tests.csproj reference ./GnbApiRestful/Webapi/Webapi.csproj
-dotnet add ./GnbApiRestful/Tests/Tests.csproj reference ./GnbApiRestful/Service/Service.csproj
-dotnet add ./GnbApiRestful/Tests/Tests.csproj reference ./GnbApiRestful/Business/Business.csproj
-dotnet add ./GnbApiRestful/Tests/Tests.csproj reference ./GnbApiRestful/Data/Data.csproj
-```
-
-#### Creación de la Estructura de Capas
-```bash
-mkdir ./GnbApiRestful/Data/DAL
-mkdir ./GnbApiRestful/Business/Logic
-mkdir ./GnbApiRestful/Service/Services
-mkdir ./GnbApiRestful/Tests/Data
-mkdir ./GnbApiRestful/Tests/Business
-mkdir ./GnbApiRestful/Tests/Service
-mkdir ./GnbApiRestful/Tests/Webapi
-mkdir ./GnbApiRestful/Tests/Data/DAL
-mkdir ./GnbApiRestful/Tests/Business/Logic
-mkdir ./GnbApiRestful/Tests/Service/Services
-mkdir ./GnbApiRestful/Tests/Webapi/Controllers
-```
-
-#### Agregar packages
-```bash
-dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package jwt
-dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package nlog
-dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package NLog.Extensions.Logging
-dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package Nlog.Web.AspNetcore
-dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package unity
-dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package Unity.Interception.NetCore
-dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package automapper
-dotnet add ./GnbApiRestful/Webapi/Webapi.csproj package Microsoft.AspNetCore.Cors
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package mvc
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package moq
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package jwt
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package nlog
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package NLog.Extensions.Logging
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package Nlog.Web.AspNetcore
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package unity
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package Unity.Interception.NetCore
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package automapper
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package Microsoft.AspNetCore.Mvc.Core
-dotnet add ./GnbApiRestful/Tests/Tests.csproj package Microsoft.Extensions.Http
-dotnet add ./GnbApiRestful/Data/Data.csproj package entityframework
-dotnet add ./GnbApiRestful/Data/Data.csproj package mongocsharpdriver
-dotnet add ./GnbApiRestful/Data/Data.csproj package Newtonsoft.Json
-dotnet add ./GnbApiRestful/Data/Data.csproj package Microsoft.Extensions.Http
-dotnet add ./GnbApiRestful/Business/Business.csproj package Newtonsoft.Json
-dotnet add ./GnbApiRestful/Business/Business.csproj package automapper
-dotnet add ./GnbApiRestful/Service/Service.csproj package Newtonsoft.Json
-dotnet add ./GnbApiRestful/Service/Service.csproj package automapper
-```
 
 # Licencia
 [MIT](https://choosealicense.com/licenses/mit/)
