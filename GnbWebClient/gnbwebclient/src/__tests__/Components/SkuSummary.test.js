@@ -35,16 +35,25 @@ describe('SkuSummary', () => {
         });
     });
 
-    describe('getId', () => {
-        it('Invoking this Method, then increase the "id" in 1', () => {
+    describe('trClassFormat', () => {
+        it('with some row and an "odd" index row, returns "tr-odd" css class name', () => {
             let sut = new SkuSummary();
-            let oldId = sut.id;
+            let row = CommonFakes.zero;
+            let oddRowIndes = CommonFakes.one;
 
-            let result = sut.getId();
+            let result = sut.trClassFormat(row, oddRowIndes);
 
-            expect(oldId).toEqual(CommonFakes.zero);
-            expect(result).toEqual(CommonFakes.one);
-            expect(result).toEqual(sut.id);
+            expect(result).toEqual(CommonFakes.trOdd);
+        });
+
+        it('with some row and an "even" index row, returns "tr-even" css class name', () => {
+            let sut = new SkuSummary();
+            let row = CommonFakes.zero;
+            let evenRowIndes = CommonFakes.two;
+
+            let result = sut.trClassFormat(row, evenRowIndes);
+
+            expect(result).toEqual(CommonFakes.trEven);
         });
     });
 });

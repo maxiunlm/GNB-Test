@@ -3,6 +3,7 @@ it('Fake Test', () => { });
 export const CommonFakes = {
     zero: 0,
     one: 1,
+    two: 2,
     once: 1,
     twice: 2,
     threeTimes: 3,
@@ -11,6 +12,8 @@ export const CommonFakes = {
     thirdIndex: 2,
     emptyString: '',
     visible: '',
+    trOdd: 'tr-odd',
+    trEven: 'tr-even',
     invisible: 'hidden',
     faleSku: 'E2114',
     skuOption: {

@@ -9,16 +9,12 @@ export default class Rates extends Component {
         super(props)
         this.id = 0;
 
-        this.getId = this.getId.bind(this);
-    }
-
-    getId() {
-        return ++this.id;
+        this.trClassFormat = this.trClassFormat.bind(this);
     }
 
     trClassFormat(row, rowIndex) {
         // row is the current row data
-        return rowIndex % 2 === 0 ? "tr-odd" : "tr-even";  // return class name.
+        return rowIndex % 2 === 0 ? 'tr-even' : 'tr-odd';  // return class name.
     }
 
     render() {
