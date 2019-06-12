@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../Styles/sku.css';
 import React, { Component } from 'react';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { RatesContext } from '../Contexts/RatesContext';
 
 export default class Rates extends Component {
@@ -13,6 +14,11 @@ export default class Rates extends Component {
 
     getId() {
         return ++this.id;
+    }
+
+    trClassFormat(row, rowIndex) {
+        // row is the current row data
+        return rowIndex % 2 === 0 ? "tr-odd" : "tr-even";  // return class name.
     }
 
     render() {
@@ -44,31 +50,11 @@ export default class Rates extends Component {
                             <div className="clearfix" />
                             <br />
                             <div>
-                                <table className="table table-dark">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">From</th>
-                                            <th scope="col">To</th>
-                                            <th scope="col">Rate</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="scroll">
-                                        {context.rates.map(rate => (
-                                            <tr key={this.getId()}>
-                                                <td>{rate.from}</td>
-                                                <td>{rate.to}</td>
-                                                <td>{rate.rate}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th scope="col">From</th>
-                                            <th scope="col">To</th>
-                                            <th scope="col">Rate</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                <BootstrapTable data={context.rates} pagination trClassName={this.trClassFormat}>
+                                    <TableHeaderColumn dataField="from" isKey={true} dataSort={true}>From</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="to" dataSort={true}>To</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="rate">Rate</TableHeaderColumn>
+                                </BootstrapTable>
                             </div>
                         </div>
                     )}

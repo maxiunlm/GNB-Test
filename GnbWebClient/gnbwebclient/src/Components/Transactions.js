@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../Styles/sku.css';
 import React, { Component } from 'react';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { TransactionsContext } from '../Contexts/TransactionsContext';
 
 export default class Transactions extends Component {
@@ -13,6 +14,11 @@ export default class Transactions extends Component {
 
     getId() {
         return ++this.id;
+    }
+
+    trClassFormat(row, rowIndex) {
+        // row is the current row data
+        return rowIndex % 2 === 0 ? "tr-odd" : "tr-even";  // return class name.
     }
 
     render() {
@@ -45,31 +51,11 @@ export default class Transactions extends Component {
                             <div className="clearfix" />
                             <br />
                             <div>
-                                <table className="table table-dark">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Sku</th>
-                                            <th scope="col">Currency</th>
-                                            <th scope="col">amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="scroll">
-                                        {context.transactions.map(transaction => (
-                                            <tr key={this.getId()}>
-                                                <td>{transaction.sku}</td>
-                                                <td>{transaction.currency}</td>
-                                                <td>{transaction.amount}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th scope="col">Sku</th>
-                                            <th scope="col">Currency</th>
-                                            <th scope="col">amount</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                <BootstrapTable data={context.transactions} pagination trClassName={this.trClassFormat}>
+                                    <TableHeaderColumn dataField="sku" isKey={true} dataSort={true}>Sku</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="currency" dataSort={true}>Currency</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="amount">Amount</TableHeaderColumn>
+                                </BootstrapTable>
                             </div>
                         </div>
                     )}
