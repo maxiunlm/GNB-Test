@@ -11,7 +11,7 @@ Además, es necesario un plan B en caso que el webservice del que obtenemos la i
 
  * Puedes utilizar cualquier framework y cualquier librería de terceros.
   >* El Servicio usa netcoreapp2.2
-  >* El Cliente implemente un React.Js 16.8.6 
+  >* El Cliente implemente un React.Js 16.8.6 sobre Node.js versión ">=8"
  * Recuerda que pueden faltar algunas conversiones, deberás calcularlas mediante la información que tengas.
  * Separación de responsabilidades en distintas capas
   >* Es Servicio  es un sistema cuatri-capas (Controlller-Service-Business-Data).
