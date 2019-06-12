@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../Styles/sku.css';
 import React, { Component } from 'react';
 import Select from 'react-select';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { SkuSummaryContext } from '../Contexts/SkuSummaryContext';
 
 export default class SkuSummary extends Component {
@@ -14,6 +15,11 @@ export default class SkuSummary extends Component {
 
     getId() {
         return ++this.id;
+    }
+
+    trClassFormat(row, rowIndex) {
+        // row is the current row data
+        return rowIndex % 2 === 0 ? "tr-odd" : "tr-even";  // return class name.
     }
 
     render() {
@@ -54,16 +60,11 @@ export default class SkuSummary extends Component {
                                 placeholder="Search a SKU"
                             />
                         </div>
-                        <div className="float-left">
-                            <div className="list-group skuTransactions">
-                                <div className="list-group-item list-group-item-primary">
-                                    Transactions para {context.selectedSku} en &euro;:
-                            </div>
-                                <div className="skuTransactionItems">
-                                    {context.transactions.map(transaction => (
-                                        <div key={this.getId()} className="list-group-item text-right">{transaction.amount}</div>
-                                    ))}
-                                </div>
+                        <div className="float-left skuTransactions">
+                            <BootstrapTable data={context.transactions} pagination trClassName={this.trClassFormat}>
+                                <TableHeaderColumn dataField="amount" isKey={true} dataSort={true} headerAlign="left" dataAlign="right">Transactions para {context.selectedSku} en &euro;</TableHeaderColumn>
+                            </BootstrapTable>
+                            <div className="list-group">
                                 <div className="list-group-item list-group-item-primary">
                                     Total in &euro;: {context.totlSku}
                                 </div>

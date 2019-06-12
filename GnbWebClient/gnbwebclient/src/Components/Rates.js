@@ -50,10 +50,11 @@ export default class Rates extends Component {
                             <div className="clearfix" />
                             <br />
                             <div>
-                                <BootstrapTable data={context.rates} pagination trClassName={this.trClassFormat}>
+                                <BootstrapTable data={context.rates} pagination trClassName={this.trClassFormat} exportCSV
+                                    csvFileName="rates-export.csv">
                                     <TableHeaderColumn dataField="from" isKey={true} dataSort={true}>From</TableHeaderColumn>
                                     <TableHeaderColumn dataField="to" dataSort={true}>To</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="rate">Rate</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="rate" headerAlign="left" dataAlign="right">Rate</TableHeaderColumn>
                                 </BootstrapTable>
                             </div>
                         </div>

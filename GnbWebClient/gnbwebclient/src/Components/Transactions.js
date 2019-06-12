@@ -51,10 +51,11 @@ export default class Transactions extends Component {
                             <div className="clearfix" />
                             <br />
                             <div>
-                                <BootstrapTable data={context.transactions} pagination trClassName={this.trClassFormat}>
+                                <BootstrapTable data={context.transactions} pagination trClassName={this.trClassFormat} exportCSV
+                                    csvFileName="transactions-export.csv">
                                     <TableHeaderColumn dataField="sku" isKey={true} dataSort={true}>Sku</TableHeaderColumn>
                                     <TableHeaderColumn dataField="currency" dataSort={true}>Currency</TableHeaderColumn>
-                                    <TableHeaderColumn dataField="amount">Amount</TableHeaderColumn>
+                                    <TableHeaderColumn dataField="amount" headerAlign="left" dataAlign="right">Amount</TableHeaderColumn>
                                 </BootstrapTable>
                             </div>
                         </div>
