@@ -56,8 +56,10 @@ docker run --rm -d -p 27017:27017/tcp mongo:latest
 ```bash
 $ git clone git://github.com/maxiunlm/GNB-Test.git
 ```
- 3. Desde la línea de comandos, posicionarse en la carpeta dinde se haya descargado el Sistema completo desde el GIT.
- 4. Seguir los pasos de 'Ejecutar el proyecto' de 'Web Service (Web Api)' y de 'Web Client' en ese orden.
+ 3. Instalar Node.js versión ">=8" (si no lo tiene instalado aun o tiene una versión anterior)
+ 4. Instalar .NET Core SDK 2.2.107 o superior (si no lo tiene instalado aun o tiene una versión anterior)
+ 5. Desde la línea de comandos, posicionarse en la carpeta dinde se haya descargado el Sistema completo desde el GIT.
+ 6. Seguir los pasos de 'Ejecutar el proyecto' de 'Web Service (Web Api)' y de 'Web Client' en ese orden.
 
 ----------------------------------------------------------------------------------------------------------
 
