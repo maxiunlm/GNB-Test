@@ -1,8 +1,8 @@
 import ClientBase from './Base/ClientBase';
 
 export default class SkuClient extends ClientBase {
-    constructor() {
-        super();
+    constructor(loginClient) {
+        super(loginClient);
 
         this.listSkus = this.listSkus.bind(this);
         this.getSku = this.getSku.bind(this);

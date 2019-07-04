@@ -45,5 +45,10 @@ export const CommonFakes = {
     },
     responseBad: {
         ok: false
+    },
+    user: {
+        username: 'username',
+        password: null,
+        token: 'token'
     }
 };

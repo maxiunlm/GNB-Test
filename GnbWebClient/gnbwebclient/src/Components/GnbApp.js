@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LoginClient from '../Clients/LoginClient';
 import SkuClient from '../Clients/SkuClient';
 import RatesClient from '../Clients/RatesClient';
 import TransactionsClient from '../Clients/TransactionsClient';
@@ -8,6 +9,7 @@ import { SkuSummaryContext } from '../Contexts/SkuSummaryContext';
 import Rates from './Rates';
 import Transactions from './Transactions';
 import SkuSummary from './SkuSummary';
+import Login from './Login';
 
 const emstyString = '';
 const visible = '';
@@ -17,9 +19,10 @@ export default class GnbApp extends Component {
     constructor(props) {
         super(props);
 
-        this.skuClient = new SkuClient();
-        this.ratesClient = new RatesClient();
-        this.transactionsClient = new TransactionsClient();
+        this.loginClient = new LoginClient();
+        this.skuClient = new SkuClient(this.loginClient);
+        this.ratesClient = new RatesClient(this.loginClient);
+        this.transactionsClient = new TransactionsClient(this.loginClient);
         this.id = 0;
         this.state = {
             skuOptions: [],
@@ -33,27 +36,15 @@ export default class GnbApp extends Component {
             spinnerVisibility: invisible
         }
 
+        this.doLogin = this.doLogin.bind(this);
+        this.loadData = this.loadData.bind(this);
+        this.hideSpinner = this.hideSpinner.bind(this);
         this.onSkuChange = this.onSkuChange.bind(this);
         this.onShowRatesClick = this.onShowRatesClick.bind(this);
         this.onShowSkuSummaryClick = this.onShowSkuSummaryClick.bind(this);
         this.onShowTransactionsClick = this.onShowTransactionsClick.bind(this);
         this.getRatesContextData = this.getRatesContextData.bind(this);
         this.getSkuOptions = this.getSkuOptions.bind(this);
-    }
-
-    async componentDidMount() {
-        this.setState({ spinnerVisibility: visible });
-
-        let rates = await this.ratesClient.listRates();
-        let transactions = await this.transactionsClient.listTransactions();
-        let skuOptions = await this.skuClient.listSkus();
-
-        this.setState({
-            skuOptions: skuOptions,
-            transactions: transactions,
-            rates: rates,
-            spinnerVisibility: invisible
-        });
     }
 
     async onSkuChange(option) {
@@ -91,6 +82,29 @@ export default class GnbApp extends Component {
             transactionsVisibility: invisible,
             ratesVisibility: visible
         });
+    }
+
+    async doLogin(username, password) {
+        this.setState({ spinnerVisibility: visible });
+        let user = await this.loginClient.login(username, password);
+        this.loadData().then(this.hideSpinner);
+        return user;
+    }
+
+    async loadData() {
+        let rates = await this.ratesClient.listRates();
+        let transactions = await this.transactionsClient.listTransactions();
+        let skuOptions = await this.skuClient.listSkus();
+
+        this.setState({
+            skuOptions: skuOptions,
+            transactions: transactions,
+            rates: rates
+        });
+    }
+
+    hideSpinner() {
+        this.setState({ spinnerVisibility: invisible });
     }
 
     getSkuOptions() {
@@ -145,6 +159,7 @@ export default class GnbApp extends Component {
 
         return (
             <div className="container">
+                <Login doLogin={this.doLogin} />
                 <SkuSummaryContext.Provider value={skuSummaryContextData}>
                     <SkuSummary
                         onSkuChange={this.onSkuChange}

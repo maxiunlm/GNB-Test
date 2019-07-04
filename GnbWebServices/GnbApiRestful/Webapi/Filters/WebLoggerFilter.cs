@@ -7,11 +7,11 @@ namespace Webapi.Filters
 {
     public class WebLoggerFilter : ActionFilterAttribute
     {
-        private ILogger logger;
+        private ILogger<WebLoggerFilter> logger;
 
-        public WebLoggerFilter(ILoggerFactory pfactory)
+        public WebLoggerFilter(ILogger<WebLoggerFilter> logger)
         {
-            logger = pfactory.AddConsole().AddDebug().CreateLogger<WebLoggerFilter>();
+            this.logger = logger;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)

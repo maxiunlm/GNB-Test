@@ -1,8 +1,8 @@
 import ClientBase from './Base/ClientBase';
 
 export default class RatesClient extends ClientBase {
-    constructor() {
-        super();
+    constructor(loginClient) {
+        super(loginClient);
 
         this.listRates = this.listRates.bind(this);
         this.fetch = this.fetch.bind(this);

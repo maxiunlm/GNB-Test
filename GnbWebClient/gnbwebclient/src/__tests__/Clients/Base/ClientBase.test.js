@@ -1,8 +1,9 @@
-/* global expect */
+/* global expect, spyOn */
 import ClientBase from '../../../Clients/Base/ClientBase';
-import { CommonFakes } from '../../Fakes/CommonFakes'
+import LoginClient from '../../../Clients/LoginClient';
+import { CommonFakes } from '../../Fakes/CommonFakes';
 
-describe('RatesClient', () => {
+describe('ClientBase', () => {
     describe('verifyResponse', () => {
         it('With a Bad response thorws an Exception', () => {
             let sut = new ClientBase();
@@ -30,7 +31,12 @@ describe('RatesClient', () => {
 
     describe('getRequestOptions', () => {
         it('With a fake Sku returns the Sku Summary', () => {
-            let sut = new ClientBase();
+            // spyOn(LoginClient.prototype, 'getAuthorizationHeader').and.callFake(async () => {
+            //     return Promise.resolve(CommonFakes.oneRate);
+            // });
+            let loginClient = new LoginClient();
+            loginClient.user = CommonFakes.user
+            let sut = new ClientBase(loginClient);
 
             let result = sut.getRequestOptions();
 

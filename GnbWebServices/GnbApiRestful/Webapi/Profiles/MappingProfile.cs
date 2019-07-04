@@ -6,6 +6,8 @@ namespace Webapi.Profiles
     {
         public MappingProfile()
         {
+            CreateMap<Service.Model.User, Webapi.Model.User>();
+            CreateMap<Webapi.Model.User, Service.Model.User>();
             CreateMap<Service.Model.Transaction, Webapi.Model.Transaction>();
             CreateMap<Webapi.Model.Transaction, Service.Model.Transaction>();
             CreateMap<Service.Model.Sku, Webapi.Model.Sku>();

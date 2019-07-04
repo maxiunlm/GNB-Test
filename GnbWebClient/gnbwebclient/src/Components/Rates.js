@@ -31,7 +31,8 @@ export default class Rates extends Component {
                                 <div className={context.spinnerVisibility + ' float-right'}>
                                     <span className="spinner-grow"></span>
                                 </div>
-                            </h4><div>
+                            </h4>
+                            <div>
                                 <div className="btn-group float-right" role="group" aria-label="Menu">
                                     <button
                                         className="btn btn-primary skuMenuButton"

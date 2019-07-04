@@ -36,17 +36,17 @@ describe('GnbApp', () => {
         });
     });
 
-    describe('componentDidMount', () => {
-        it('Invokes "setState" method twice', async () => {
+    describe('loadData', () => {
+        it('Invokes "setState" method once', async () => {
             spyOn(GnbApp.prototype, 'setState').and.callFake(() => { });
             spyOn(RatesClient.prototype, 'listRates').and.callFake(async () => { });
             spyOn(TransactionsClient.prototype, 'listTransactions').and.callFake(async () => { });
             spyOn(SkuClient.prototype, 'listSkus').and.callFake(async () => { });
             let sut = new GnbApp();
 
-            await sut.componentDidMount();
+            await sut.loadData();
 
-            expect(GnbApp.prototype.setState.calls.count()).toEqual(CommonFakes.twice);
+            expect(GnbApp.prototype.setState.calls.count()).toEqual(CommonFakes.once);
         });
 
         it('Invokes "listRates" method from "RatesClient" object once', async () => {
@@ -56,7 +56,7 @@ describe('GnbApp', () => {
             spyOn(SkuClient.prototype, 'listSkus').and.callFake(async () => { });
             let sut = new GnbApp();
 
-            await sut.componentDidMount();
+            await sut.loadData();
 
             expect(RatesClient.prototype.listRates.calls.count()).toEqual(CommonFakes.once);
         });
@@ -68,7 +68,7 @@ describe('GnbApp', () => {
             spyOn(SkuClient.prototype, 'listSkus').and.callFake(async () => { });
             let sut = new GnbApp();
 
-            await sut.componentDidMount();
+            await sut.loadData();
 
             expect(TransactionsClient.prototype.listTransactions.calls.count()).toEqual(CommonFakes.once);
         });
@@ -80,7 +80,7 @@ describe('GnbApp', () => {
             spyOn(SkuClient.prototype, 'listSkus').and.callFake(async () => { });
             let sut = new GnbApp();
 
-            await sut.componentDidMount();
+            await sut.loadData();
 
             expect(SkuClient.prototype.listSkus.calls.count()).toEqual(CommonFakes.once);
         });
